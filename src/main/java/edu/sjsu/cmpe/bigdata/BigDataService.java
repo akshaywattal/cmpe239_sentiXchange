@@ -33,7 +33,8 @@ public class BigDataService extends Service<BigDataServiceConfiguration> {
 	bootstrap.setName("bigdata-service");
 	bootstrap.addBundle(new AssetsBundle());
 	bootstrap.addBundle(new ViewBundle());
-	bootstrap.addBundle(new JobsBundle("edu.sjsu.cmpe.bigdata"));
+	//For Analytics Job WIP
+	//bootstrap.addBundle(new JobsBundle("edu.sjsu.cmpe.bigdata"));
     }
 
     @Override
@@ -42,8 +43,8 @@ public class BigDataService extends Service<BigDataServiceConfiguration> {
         
         /** Root API */
 		environment.addResource(UserResource.class);
-		/** Books APIs */
-		environment.addResource(AnalyticsResource.class);	
+		/** Analytics APIs */
+		//environment.addResource(AnalyticsResource.class);	
 		/** UI API */
 		environment.addResource(new HomeResource());
 		environment.addResource(new DashboardResource());

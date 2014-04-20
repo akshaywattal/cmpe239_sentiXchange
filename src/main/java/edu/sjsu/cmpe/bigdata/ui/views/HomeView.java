@@ -4,17 +4,11 @@ import java.util.List;
 
 import com.yammer.dropwizard.views.View;
 
-//import edu.sjsu.cmpe.library.domain.Book;
-
 public class HomeView extends View {
-      //   private final List<Book> books;
-         
+
+     //Home Mustache  
      public HomeView() {
                super("home.mustache");
-            //   this.books = books;
      }
      
-    /* public List<Book> getBooks() {
-               return books;
-     }*/
 }
