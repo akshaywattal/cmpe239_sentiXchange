@@ -1,2 +1,4 @@
 /target
 /logs
+/.idea
+/src/main/java/edu/sjsu/cmpe/bigdata/dto/twitter4j.properties

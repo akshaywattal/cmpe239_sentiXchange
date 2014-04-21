@@ -4,23 +4,14 @@ import com.yammer.dropwizard.Service;
 import com.yammer.dropwizard.assets.AssetsBundle;
 import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
-
-
-
 import com.yammer.dropwizard.views.ViewBundle;
-
-
-
-
-
-import de.spinscale.dropwizard.jobs.JobsBundle;
-import edu.sjsu.cmpe.bigdata.api.resources.AnalyticsResource;
-//import edu.sjsu.cmpe.bigdata.api.resources.BookResource;
 import edu.sjsu.cmpe.bigdata.api.resources.UserResource;
 import edu.sjsu.cmpe.bigdata.config.BigDataServiceConfiguration;
-import edu.sjsu.cmpe.bigdata.stomp.ApolloSTOMP;
 import edu.sjsu.cmpe.bigdata.ui.resources.DashboardResource;
 import edu.sjsu.cmpe.bigdata.ui.resources.HomeResource;
+
+//import edu.sjsu.cmpe.bigdata.api.resources.BookResource;
+//import edu.sjsu.cmpe.bigdata.stomp.ApolloSTOMP;
 
 public class BigDataService extends Service<BigDataServiceConfiguration> {
 

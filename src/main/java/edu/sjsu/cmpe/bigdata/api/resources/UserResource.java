@@ -1,6 +1,5 @@
 package edu.sjsu.cmpe.bigdata.api.resources;
 
-import javax.management.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -15,23 +14,14 @@ import com.yammer.metrics.annotation.Timed;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mongodb.MongoClient;
-import com.mongodb.MongoException;
-import com.mongodb.WriteConcern;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.DBCursor;
-import com.mongodb.ServerAddress;
 
 import edu.sjsu.cmpe.bigdata.domain.User;
-import edu.sjsu.cmpe.bigdata.dto.LinkDto;
-import edu.sjsu.cmpe.bigdata.dto.LinksDto;
 import edu.sjsu.cmpe.bigdata.dao.MongoDBDAO;
 
 
