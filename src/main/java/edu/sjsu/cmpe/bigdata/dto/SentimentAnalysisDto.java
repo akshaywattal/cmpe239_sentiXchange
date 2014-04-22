@@ -37,10 +37,10 @@ public class SentimentAnalysisDto {
 		// Fetching "keys" from cursor	
 		DBObject cur = cursor.next();
 		String business_id = (String) cur.get("business_id");
-		int positive = (Integer) cur.get("positive");
-		int negative = (Integer) cur.get("negative");
-		int neutral  = (Integer) cur.get("neutral");
-		int notEval  = (Integer) cur.get("notEval");
+		int positive = ((Number) cur.get("positive")).intValue();
+		int negative = ((Number) cur.get("negative")).intValue();
+		int neutral  = ((Number) cur.get("neutral")).intValue();
+		int notEval  = ((Number) cur.get("notEval")).intValue();
 			
 		// Printing analysis details
 		System.out.println("Number of neutral reviews       : "+ neutral);
