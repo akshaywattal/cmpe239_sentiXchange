@@ -31,8 +31,9 @@ public class SentimentAnalysisDto {
 						.append("date", -1);
 		
 		// Executing query
-		DBCursor cursor = collection.find(query1).sort(query2).limit(1);
-			
+		//DBCursor cursor = collection.find(query1).sort(query2).limit(1);
+		DBCursor cursor = collection.find(query1).limit(1);
+		
 		// Fetching "keys" from cursor	
 		DBObject cur = cursor.next();
 		String business_id = (String) cur.get("business_id");

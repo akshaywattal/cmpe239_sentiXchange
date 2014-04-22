@@ -12,7 +12,7 @@ apolloHost: "54.215.165.222"
 apolloPort: 61613	
 
 #Contains properties for MongoDB 
-dbHost: "localhost"
+dbHost: "54.215.165.222"
 dbPort: 27017
 databasename: "bigdata"
 username: ""

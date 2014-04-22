@@ -23,7 +23,7 @@ public class MongoDBDAO {
     String bigdataUserCollection;
 	
 	public MongoDBDAO(){
-	this.setDbHostName(configuration.getDbHost());
+	this.dbHostName = configuration.getDbHost();
 	this.dbPortNumber = configuration.getDbPort();
 	this.dbName = configuration.getDatabasename();
 	this.dbUserName = configuration.getDatabasename();

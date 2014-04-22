@@ -5,6 +5,8 @@ import com.yammer.dropwizard.assets.AssetsBundle;
 import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
 import com.yammer.dropwizard.views.ViewBundle;
+
+import edu.sjsu.cmpe.bigdata.api.resources.AnalyticsResource;
 import edu.sjsu.cmpe.bigdata.api.resources.UserResource;
 import edu.sjsu.cmpe.bigdata.config.BigDataServiceConfiguration;
 import edu.sjsu.cmpe.bigdata.ui.resources.DashboardResource;
@@ -35,7 +37,7 @@ public class BigDataService extends Service<BigDataServiceConfiguration> {
         /** Root API */
 		environment.addResource(UserResource.class);
 		/** Analytics APIs */
-		//environment.addResource(AnalyticsResource.class);	
+		environment.addResource(AnalyticsResource.class);	
 		/** UI API */
 		environment.addResource(new HomeResource());
 		environment.addResource(new DashboardResource());
