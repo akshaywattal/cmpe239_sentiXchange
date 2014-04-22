@@ -27,8 +27,8 @@ public class SentimentAnalysisDto {
 		DBObject query1 = new BasicDBObject()
 						.append("business_id", "VFslQjSgrw4Mu5_Q1xk1KQ");
 
-		DBObject query2 = new BasicDBObject()
-						.append("date", -1);
+		//DBObject query2 = new BasicDBObject()
+			//			.append("date", -1);
 		
 		// Executing query
 		//DBCursor cursor = collection.find(query1).sort(query2).limit(1);
