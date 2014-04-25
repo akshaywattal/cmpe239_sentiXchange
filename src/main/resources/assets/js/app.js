@@ -20,7 +20,7 @@ app.directive('map', function($http) {
 				$http({
 					method: 'GET',
 					dataType: 'json',
-					url: 'http://54.215.165.222:9080/bigdata/v1/users/1/competition?callback=JSON_CALLBACK',
+					url: '/bigdata/v1/users/1/competition?callback=JSON_CALLBACK',
 					headers: {
 						'Content-Type': 'application/json'
 					}

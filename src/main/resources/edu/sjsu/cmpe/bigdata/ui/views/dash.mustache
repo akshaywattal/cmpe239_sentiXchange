@@ -54,7 +54,7 @@
                         <li class="divider"></li>
                         <li><a href="#">Configurations</a></li>
                         <li class="divider"></li>-->
-                        <li><a href="/bigdata">Logout</a></li>
+                        <li><a href="/bigdata" onclick="docCookies.removeItem(docCookies.getItem(username))">Logout</a></li>
                      </ul>
                   </li>
                </ul>
@@ -178,6 +178,7 @@
       <script src="../assets/js/jquery.neosmart.fb.wall.js" type="text/javascript"></script>
       <script src="../assets/js/stomp.js"></script> 
       <script src="../assets/js/ws.js"></script>
+      <script src="../assets/js/cookies.js"></script>
       <script type="text/javascript">
          $(function(){       
          $('#example1').fbWall({ id:'CodeAssassins',accessToken:'CAAUSL0z1mCQBAJswvpR3urkGKlvPD3ijusMVuThG2IjW6CBbHaFsf3lybQdf4edufZAGhZA10BLSBLIiEDuzXq9m1mqWWslZC47UMUmsRUkaDxi19Faz3vqvI8aOR7TSa90zFQAMvdZB8bihfivw0GjmO9ZA8ISEADMzyH016ocZBMTJElLJtHPyW8S7zEDBoZD'});
