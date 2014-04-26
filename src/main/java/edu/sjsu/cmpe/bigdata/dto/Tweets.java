@@ -1,19 +1,80 @@
 package edu.sjsu.cmpe.bigdata.dto;
 
+
 import twitter4j.*;
-
-import java.util.Collections;
-import java.util.List;
-
 /**
  * Created by shankey on 4/20/14.
  */
 public class Tweets {
 
-    public List<Status> search(String keyword) {
+    public void search(String keyword) {
         TwitterFactory tf = new TwitterFactory();
         Twitter twitter = tf.getInstance();
-        Query query = new Query(keyword + " -filter:links -filter:replies -filter:images");
+        TwitterStreamFactory ts = new TwitterStreamFactory();
+        TwitterStream tsi = ts.getInstance();
+        StatusListener listener = new StatusListener() {
+
+            @Override
+            public void onException(Exception arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onDeletionNotice(StatusDeletionNotice arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onScrubGeo(long arg0, long arg1) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onStallWarning(StallWarning stallWarning) {
+
+            }
+
+            @Override
+            public void onStatus(Status status) {
+                User user = status.getUser();
+
+                // gets Username
+                String username = status.getUser().getScreenName();
+                System.out.println(username);
+                String profileLocation = user.getLocation();
+                System.out.println(profileLocation);
+                long tweetId = status.getId();
+                System.out.println(tweetId);
+                String content = status.getText();
+                System.out.println(content +"\n");
+
+            }
+
+            @Override
+            public void onTrackLimitationNotice(int arg0) {
+                // TODO Auto-generated method stub
+
+            }};
+
+
+
+        FilterQuery fq = new FilterQuery();
+
+        String keywords[] = {keyword};
+
+        fq.track(keywords);
+
+        tsi.addListener(listener);
+        tsi.filter(fq);
+
+
+
+
+    }
+        /*Query query = new Query(keyword + " -filter:links -filter:replies -filter:images");
         query.setCount(200);
         query.setLocale("en");
         query.setLang("en");
@@ -24,20 +85,21 @@ public class Tweets {
             // ignore
             e.printStackTrace();
         }
-        return Collections.emptyList();
+        return Collections.emptyList();  */
 
-    }
+
 
     public static void main(String[] args) {
         RNTN sentiment = new RNTN();
         Tweets twitterSearch = new Tweets();
-        List<Status> statuses = twitterSearch.search("modi");
+        //List<Status> statuses = twitterSearch.search("modi");
+        twitterSearch.search("modi");
         //System.out.print(sentiment.findSentiment("I am extremely best"));
-        for (Status status : statuses) {
+        /*for (Status status : statuses) {
             System.out.println(status.getCreatedAt()+"||||||||" +
                     sentiment.findSentiment(status.getText())+"|||||||"+
                     status.getText());
-        }
+        }   */
     }
 }
 

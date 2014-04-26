@@ -308,7 +308,7 @@
 	  	var username = document.getElementById("username_login").value;
   		var encodedPassword = document.getElementById("password_login");
   		encodedPassword.value = window.btoa(encodedPassword.value);
-  		docCookies.setItem(username, encodedPassword.value , new Date(2014,5,1), "/");
+  		docCookies.setItem("senti", encodedPassword.value , new Date(2014,5,1), "/");
 		var url = "/bigdata/v1/users/?username=" + username + "&password=" + encodedPassword.value;
 		//var representationOfDesiredState = JSON.stringify($('#login-form').serializeObject()); //this in our case would be JSON text
 		var client = new XMLHttpRequest();

@@ -1,28 +1,19 @@
 package edu.sjsu.cmpe.bigdata.api.resources;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
+import com.yammer.metrics.annotation.Timed;
+import edu.sjsu.cmpe.bigdata.dao.MongoDBDAO;
+import edu.sjsu.cmpe.bigdata.domain.User;
+
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import com.yammer.metrics.annotation.Timed;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
-import com.mongodb.DBCursor;
-
-import edu.sjsu.cmpe.bigdata.domain.User;
-import edu.sjsu.cmpe.bigdata.dao.MongoDBDAO;
 
 
 @Path("/v1/users")
@@ -68,6 +59,7 @@ public class UserResource {
     	/**
     	 * Creating an instance of MongoDB Data Access Layer to connect to database
     	 */
+
     	MongoDBDAO mongoClient = new MongoDBDAO();
     	mongoClient.getDBConnection(mongoClient.getDbHostName(), mongoClient.getDbPortNumber());
     	mongoClient.getDB(mongoClient.getDbName());

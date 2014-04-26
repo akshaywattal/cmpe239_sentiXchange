@@ -75,6 +75,7 @@
     <orderEntry type="library" name="Maven: com.googlecode.efficient-java-matrix-library:ejml:0.23" level="project" />
     <orderEntry type="library" name="Maven: edu.stanford.nlp:stanford-corenlp:models:3.3.1" level="project" />
     <orderEntry type="library" name="Maven: org.twitter4j:twitter4j-core:4.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.twitter4j:twitter4j-stream:4.0.1" level="project" />
   </component>
 </module>
 

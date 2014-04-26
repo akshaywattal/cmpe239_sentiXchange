@@ -75,7 +75,7 @@ app.directive('pieplot', function($http) {
                             $http({
                                     method: 'GET',
                                     dataType: 'json',
-                                    url: 'http://54.215.165.222:9080/bigdata/v1/analytics/sentiment',
+                                    url: '/bigdata/v1/analytics/sentiment',
                                     headers: {
                                             'Content-Type': 'application/json'
                                     }
@@ -135,7 +135,7 @@ app.directive('donutplot', function($http) {
                             $http({
                                     method: 'GET',
                                     dataType: 'json',
-                                    url: 'http://54.215.165.222:9080/bigdata/v1/analytics/sentiment',
+                                    url: '/bigdata/v1/analytics/sentiment',
                                     headers: {
                                             'Content-Type': 'application/json'
                                     }
