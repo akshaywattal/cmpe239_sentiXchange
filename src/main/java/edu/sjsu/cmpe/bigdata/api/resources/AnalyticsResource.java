@@ -1,6 +1,7 @@
 package edu.sjsu.cmpe.bigdata.api.resources;
 
 import com.yammer.metrics.annotation.Timed;
+
 import edu.sjsu.cmpe.bigdata.dao.MongoDBDAO;
 import edu.sjsu.cmpe.bigdata.dto.RNTN;
 import edu.sjsu.cmpe.bigdata.dto.SentimentAnalysisDto;
@@ -8,7 +9,12 @@ import edu.sjsu.cmpe.bigdata.dto.Tweets;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+
+import twitter4j.Status;
+import twitter4j.User;
+
 import java.net.UnknownHostException;
+import java.util.List;
 
 /**
  * Main Analytics resource, contains API for all Big Data Analysis 
@@ -53,9 +59,10 @@ public class AnalyticsResource {
     @Path("/sentiment")
     @Timed(name = "get-sentiment")
     public String getSentiment(@QueryParam("keyword") String  keyword) throws UnknownHostException {
-		RNTN sentiment = new RNTN();
+		//RNTN sentiment = new RNTN();
 		Tweets twitterSearch = new Tweets();
-		//List<Status> statuses = twitterSearch.search(keyword);
+		twitterSearch.search(keyword);
+		
 		return null;
     }
 }

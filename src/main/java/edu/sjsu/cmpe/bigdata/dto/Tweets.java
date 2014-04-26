@@ -37,9 +37,9 @@ public class Tweets {
 
             }
 
-            @Override
             public void onStatus(Status status) {
-                User user = status.getUser();
+            	RNTN sentiment = new RNTN();
+            	User user = status.getUser();
 
                 // gets Username
                 String username = status.getUser().getScreenName();
@@ -50,7 +50,7 @@ public class Tweets {
                 System.out.println(tweetId);
                 String content = status.getText();
                 System.out.println(content +"\n");
-
+                System.out.println(sentiment.findSentiment(content));
             }
 
             @Override
@@ -90,7 +90,7 @@ public class Tweets {
 
 
     public static void main(String[] args) {
-        RNTN sentiment = new RNTN();
+        
         Tweets twitterSearch = new Tweets();
         //List<Status> statuses = twitterSearch.search("modi");
         twitterSearch.search("modi");
