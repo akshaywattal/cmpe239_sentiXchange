@@ -1589,3 +1589,90 @@ INFO  [2014-04-27 04:54:36,690] com.yammer.dropwizard.config.Environment: tasks 
 
 INFO  [2014-04-27 04:54:36,926] org.eclipse.jetty.server.AbstractConnector: Started InstrumentedBlockingChannelConnector@0.0.0.0:9080
 INFO  [2014-04-27 04:54:36,927] org.eclipse.jetty.server.AbstractConnector: Started SocketConnector@0.0.0.0:9081
+WARN  [2014-04-27 05:00:51,915] com.yammer.dropwizard.config.ServerFactory: 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!    THIS SERVICE HAS NO HEALTHCHECKS. THIS MEANS YOU WILL NEVER KNOW IF IT    !
+!    DIES IN PRODUCTION, WHICH MEANS YOU WILL NEVER KNOW IF YOU'RE LETTING     !
+!     YOUR USERS DOWN. YOU SHOULD ADD A HEALTHCHECK FOR EACH DEPENDENCY OF     !
+!     YOUR SERVICE WHICH FULLY (BUT LIGHTLY) TESTS YOUR SERVICE'S ABILITY TO   !
+!      USE THAT SERVICE. THINK OF IT AS A CONTINUOUS INTEGRATION TEST.         !
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+INFO  [2014-04-27 05:00:52,009] com.yammer.dropwizard.cli.ServerCommand: Starting bigdata-service
+INFO  [2014-04-27 05:00:52,012] org.eclipse.jetty.server.Server: jetty-8.1.10.v20130312
+INFO  [2014-04-27 05:00:52,150] com.sun.jersey.server.impl.application.WebApplicationImpl: Initiating Jersey application, version 'Jersey: 1.17.1 02/28/2013 12:47 PM'
+INFO  [2014-04-27 05:00:52,245] com.yammer.dropwizard.config.Environment: The following paths were found for the configured resources:
+
+    GET     /bigdata/ (edu.sjsu.cmpe.bigdata.ui.resources.HomeResource)
+    GET     /bigdata/dashboard (edu.sjsu.cmpe.bigdata.ui.resources.DashboardResource)
+    GET     /bigdata/v1/users (edu.sjsu.cmpe.bigdata.api.resources.UserResource)
+    GET     /bigdata/v1/users/{id}/competition (edu.sjsu.cmpe.bigdata.api.resources.UserResource)
+    POST    /bigdata/v1/users (edu.sjsu.cmpe.bigdata.api.resources.UserResource)
+    GET     /bigdata/v1/analytics/sentiment (edu.sjsu.cmpe.bigdata.api.resources.AnalyticsResource)
+    POST    /bigdata/v1/analytics/sentiment (edu.sjsu.cmpe.bigdata.api.resources.AnalyticsResource)
+
+INFO  [2014-04-27 05:00:52,245] com.yammer.dropwizard.config.Environment: tasks = 
+
+    POST    /tasks/gc (com.yammer.dropwizard.tasks.GarbageCollectionTask)
+
+INFO  [2014-04-27 05:00:52,703] org.eclipse.jetty.server.AbstractConnector: Started InstrumentedBlockingChannelConnector@0.0.0.0:9080
+INFO  [2014-04-27 05:00:52,706] org.eclipse.jetty.server.AbstractConnector: Started SocketConnector@0.0.0.0:9081
+WARN  [2014-04-27 05:01:05,617] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:01:05,673] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83C, decimal: 55356)
+WARN  [2014-04-27 05:01:06,411] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:01:07,339] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:01:08,285] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:01:08,550] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:01:09,182] edu.stanford.nlp.process.PTBLexer: Untokenizable: ️ (U+FE0F, decimal: 65039)
+WARN  [2014-04-27 05:01:09,448] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:01:19,610] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:01:19,655] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83C, decimal: 55356)
+WARN  [2014-04-27 05:01:20,355] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:01:21,421] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:01:22,592] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:01:22,817] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:01:23,383] edu.stanford.nlp.process.PTBLexer: Untokenizable: ️ (U+FE0F, decimal: 65039)
+WARN  [2014-04-27 05:01:23,575] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:01:33,317] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:01:33,359] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83C, decimal: 55356)
+WARN  [2014-04-27 05:01:34,041] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:01:35,009] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:01:35,874] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:01:36,137] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:01:36,711] edu.stanford.nlp.process.PTBLexer: Untokenizable: ️ (U+FE0F, decimal: 65039)
+WARN  [2014-04-27 05:01:36,915] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:01:46,559] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:01:46,586] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83C, decimal: 55356)
+WARN  [2014-04-27 05:01:47,289] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:01:48,213] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:01:49,057] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:01:49,300] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:01:49,826] edu.stanford.nlp.process.PTBLexer: Untokenizable: ️ (U+FE0F, decimal: 65039)
+WARN  [2014-04-27 05:01:50,017] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:01:58,702] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:01:58,730] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83C, decimal: 55356)
+WARN  [2014-04-27 05:01:59,439] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:02:00,255] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:02:01,148] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:02:01,367] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:02:01,936] edu.stanford.nlp.process.PTBLexer: Untokenizable: ️ (U+FE0F, decimal: 65039)
+WARN  [2014-04-27 05:02:02,155] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:02:09,261] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:02:12,108] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:02:12,137] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83C, decimal: 55356)
+WARN  [2014-04-27 05:02:12,723] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:02:13,534] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:02:14,374] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:02:14,673] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:02:15,335] edu.stanford.nlp.process.PTBLexer: Untokenizable: ️ (U+FE0F, decimal: 65039)
+WARN  [2014-04-27 05:02:15,521] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:02:21,343] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:02:24,246] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:02:24,280] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83C, decimal: 55356)
+WARN  [2014-04-27 05:02:24,931] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:02:25,783] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:02:26,668] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:02:26,894] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)
+WARN  [2014-04-27 05:02:27,439] edu.stanford.nlp.process.PTBLexer: Untokenizable: ️ (U+FE0F, decimal: 65039)
+WARN  [2014-04-27 05:02:27,643] edu.stanford.nlp.process.PTBLexer: Untokenizable: ? (U+D83D, decimal: 55357)

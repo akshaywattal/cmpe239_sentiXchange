@@ -18,6 +18,7 @@ databasename: "bigdata"
 username: ""
 password: ""
 bigdatausercollection: "bigdataUserCollection"
+datacollection: "data"
 
 # HTTP-specific options.
 http:

@@ -1,14 +1,9 @@
 package edu.sjsu.cmpe.bigdata.dao;
 
-import java.net.UnknownHostException;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.MongoClient;
-
+import com.mongodb.*;
 import edu.sjsu.cmpe.bigdata.config.BigDataServiceConfiguration;
+
+import java.net.UnknownHostException;
 
 public class MongoDBDAO {
 	BigDataServiceConfiguration configuration = new BigDataServiceConfiguration();
@@ -21,6 +16,10 @@ public class MongoDBDAO {
     String dbUserName;
     String dbPassword;
     String bigdataUserCollection;
+
+
+
+    String dataCollection;
 	
 	public MongoDBDAO(){
 	this.dbHostName = configuration.getDbHost();
@@ -29,6 +28,7 @@ public class MongoDBDAO {
 	this.dbUserName = configuration.getDatabasename();
 	this.dbPassword = configuration.getDbHost();
 	this.bigdataUserCollection = configuration.getBigdatausercollection();
+    this.dataCollection = configuration.getDatacollection();
 	}
 	
 	public MongoClient getDBConnection(String dbHostName, int dbPortNumber) throws UnknownHostException {
@@ -107,4 +107,11 @@ public class MongoDBDAO {
 		this.bigdataUserCollection = bigdataUserCollection;
 	}
 
-}
+    public String getDataCollection() {
+    return dataCollection;     }
+
+    public void setDataCollection(String dataCollection) {
+        this.dataCollection = dataCollection;
+    }
+
+ }
