@@ -1,16 +1,19 @@
 package edu.sjsu.cmpe.bigdata.dto;
-
+import java.util.Collections;
+import java.util.List;
 
 import twitter4j.*;
+import twitter4j.conf.ConfigurationBuilder;
 /**
  * Created by shankey on 4/20/14.
  */
 public class Tweets {
 
-    public void search(String keyword) {
+    public List<Status> search(String keyword) {
+    	
         TwitterFactory tf = new TwitterFactory();
         Twitter twitter = tf.getInstance();
-        TwitterStreamFactory ts = new TwitterStreamFactory();
+       /* TwitterStreamFactory ts = new TwitterStreamFactory();
         TwitterStream tsi = ts.getInstance();
         StatusListener listener = new StatusListener() {
 
@@ -74,8 +77,9 @@ public class Tweets {
 
 
     }
-        /*Query query = new Query(keyword + " -filter:links -filter:replies -filter:images");
-        query.setCount(200);
+    */
+        Query query = new Query(keyword + " -filter:links -filter:replies -filter:images");
+        query.setCount(50);
         query.setLocale("en");
         query.setLang("en");
         try {
@@ -85,7 +89,9 @@ public class Tweets {
             // ignore
             e.printStackTrace();
         }
-        return Collections.emptyList();  */
+        return Collections.emptyList();  
+        
+    }
 
 
 

@@ -54,15 +54,37 @@ public class AnalyticsResource {
 	
 	/**
 	 * API to get result of sentiment analysis
+	 * @throws InterruptedException 
 	 */
 	@POST
     @Path("/sentiment")
     @Timed(name = "get-sentiment")
-    public String getSentiment(@QueryParam("keyword") String  keyword) throws UnknownHostException {
-		//RNTN sentiment = new RNTN();
-		Tweets twitterSearch = new Tweets();
-		twitterSearch.search(keyword);
+    public String getSentiment(@QueryParam("keyword") String  keyword) throws UnknownHostException, InterruptedException {
 		
+		//while(true)
+		//{
+		int score = 0;
+		RNTN sentiment = new RNTN();
+		Tweets twitterSearch = new Tweets();
+		 List<Status> statuses = twitterSearch.search(keyword);
+		 for (Status status : statuses) {
+			 	int sent = sentiment.findSentiment(status.getText());
+	            System.out.println(status.getCreatedAt()+"||||||||" + sent+"|||||||"+ status.getText());
+	            if (sent == 2);
+	            else if (sent < 2) score--;
+	            else if (sent > 2) score++;
+	            	            
+	        }
+		 score = score * 2;
+		 if(score == 0)
+		 System.out.println("Total Sentiment: " + score + " (NEUTRAL)");
+		 else
+		 System.out.println("Total Sentiment: " + Math.abs(score) + "% " + ((score > 0)? "POSITVE":"NEGATIVE"));
+		 Thread.sleep(5000);
 		return null;
+			
+		//}
+		
+		
     }
 }
