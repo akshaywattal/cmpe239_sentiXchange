@@ -6,6 +6,7 @@ import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
 import com.yammer.dropwizard.views.ViewBundle;
 
+import de.spinscale.dropwizard.jobs.JobsBundle;
 import edu.sjsu.cmpe.bigdata.api.resources.AnalyticsResource;
 import edu.sjsu.cmpe.bigdata.api.resources.UserResource;
 import edu.sjsu.cmpe.bigdata.config.BigDataServiceConfiguration;
@@ -26,8 +27,8 @@ public class BigDataService extends Service<BigDataServiceConfiguration> {
 	bootstrap.setName("bigdata-service");
 	bootstrap.addBundle(new AssetsBundle());
 	bootstrap.addBundle(new ViewBundle());
-	//For Analytics Job WIP
-	//bootstrap.addBundle(new JobsBundle("edu.sjsu.cmpe.bigdata"));
+	//For Streaming Analytics Job WIP
+	bootstrap.addBundle(new JobsBundle("edu.sjsu.cmpe.bigdata"));
     }
 
     @Override

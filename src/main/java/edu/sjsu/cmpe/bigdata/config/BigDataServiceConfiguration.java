@@ -1,5 +1,7 @@
 package edu.sjsu.cmpe.bigdata.config;
 
+import java.util.List;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -34,7 +36,7 @@ public class BigDataServiceConfiguration extends Configuration {
     
     @NotEmpty
     @JsonProperty
-    private static String stompQueueName;
+    private static List<String> stompQueueName;
 
     @NotEmpty
     @JsonProperty
@@ -63,7 +65,7 @@ public class BigDataServiceConfiguration extends Configuration {
 	/**
      * @return the stompQueueName
      */
-    public String getStompQueueName() {
+    public List<String> getStompQueueName() {
 	return stompQueueName;
     }
 
@@ -71,7 +73,7 @@ public class BigDataServiceConfiguration extends Configuration {
      * @param stompQueueName
      *            the stompQueueName to set
      */
-    public void setStompQueueName(String stompQueueName) {
+    public void setStompQueueName(List<String> stompQueueName) {
     	BigDataServiceConfiguration.stompQueueName = stompQueueName;
     }
 

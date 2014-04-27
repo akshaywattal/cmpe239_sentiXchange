@@ -1,6 +1,6 @@
 # Apollo STOMP Broker Configuration
 # Queue: For future use
-stompQueueName: /queue/codeassasins.bigdata.yelp
+stompQueueName: ["AmericanExpress", "OPENForum", "BofA_Community", "ChaseGiving", "usaa", "INGDIRECT", "BofA_Help", "WellsFargo", "BofA_Careers", "AskAmex", "Citi", "Wachovia", "Aks_WellsFargo", "westpac", "MasterCardNews", "BofA_News", "NAB", "Deutsche_News", "CEO_INGDIRECT", "BarclaysWealth", "NetBank", "AskCiti", "TD_Canada", "gtbank", "PinnacleBankSC", "RBC", "Ubank", "USAA_help", "BancoSabadell", "CitiJobs", "TDBank_US", "StandardBankGrp", "BarclaysCycle", "SuperStarSaver", "ASBBank", "Rbjacobs", "Halifax_Online", "grameenbank", "LloydsTSBOnline", "ICICIBank_Care", "citibankaus", "wealthinsights", "anzmoneymanager", "NorthShoreBank", "first_direct", "WellsFargoBank", "AllyBank", "ArvestBank", "CIBCnews", "BarclaysStockbroker", "PNCVWallet"]
 
 # Topic: For sentiment analysis
 stompTopicName: /topic/codeassasins.sentiment
@@ -9,7 +9,7 @@ stompTopicName: /topic/codeassasins.sentiment
 apolloUser: "admin"
 apolloPassword: "password"
 apolloHost: "54.215.165.222"
-apolloPort: 61613	
+apolloPort: 61613
 
 #Contains properties for MongoDB 
 dbHost: "localhost"

@@ -1,13 +1,15 @@
 package edu.sjsu.cmpe.bigdata.dto;
 
 
+import java.util.List;
+
 import twitter4j.*;
 /**
  * Created by shankey on 4/20/14.
  */
 public class Tweets {
 
-    public void search(String keyword) {
+    public void search(String twitterStreamingKewords) {
         TwitterFactory tf = new TwitterFactory();
         Twitter twitter = tf.getInstance();
         TwitterStreamFactory ts = new TwitterStreamFactory();
@@ -63,7 +65,7 @@ public class Tweets {
 
         FilterQuery fq = new FilterQuery();
 
-        String keywords[] = {keyword};
+        String keywords[] = {twitterStreamingKewords};
 
         fq.track(keywords);
 
