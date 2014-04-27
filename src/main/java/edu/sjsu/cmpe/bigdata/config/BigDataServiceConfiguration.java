@@ -1,5 +1,15 @@
 package edu.sjsu.cmpe.bigdata.config;
 
+<<<<<<< HEAD
+=======
+import java.util.List;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
+>>>>>>> a0456bab41c36ff64954c66af80481ea298a06b0
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yammer.dropwizard.config.Configuration;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -30,7 +40,7 @@ public class BigDataServiceConfiguration extends Configuration {
     
     @NotEmpty
     @JsonProperty
-    private static String stompQueueName;
+    private static List<String> stompQueueName;
 
     @NotEmpty
     @JsonProperty
@@ -70,7 +80,7 @@ public class BigDataServiceConfiguration extends Configuration {
 	/**
      * @return the stompQueueName
      */
-    public String getStompQueueName() {
+    public List<String> getStompQueueName() {
 	return stompQueueName;
     }
 
@@ -78,7 +88,7 @@ public class BigDataServiceConfiguration extends Configuration {
      * @param stompQueueName
      *            the stompQueueName to set
      */
-    public void setStompQueueName(String stompQueueName) {
+    public void setStompQueueName(List<String> stompQueueName) {
     	BigDataServiceConfiguration.stompQueueName = stompQueueName;
     }
 
