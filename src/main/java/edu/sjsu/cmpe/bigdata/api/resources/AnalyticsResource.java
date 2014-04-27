@@ -61,7 +61,7 @@ public class AnalyticsResource {
     public String getSentiment(@QueryParam("keyword") String  keyword) throws UnknownHostException {
 		//RNTN sentiment = new RNTN();
 		Tweets twitterSearch = new Tweets();
-		twitterSearch.search(keyword);
+		twitterSearch.searchStream(keyword);
 		
 		return null;
     }

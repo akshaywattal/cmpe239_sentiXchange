@@ -9,7 +9,7 @@ import twitter4j.*;
  */
 public class Tweets {
 
-    public void search(String twitterStreamingKewords) {
+    public void searchStream(String twitterStreamingKewords) {
         TwitterFactory tf = new TwitterFactory();
         Twitter twitter = tf.getInstance();
         TwitterStreamFactory ts = new TwitterStreamFactory();
@@ -95,7 +95,7 @@ public class Tweets {
         
         Tweets twitterSearch = new Tweets();
         //List<Status> statuses = twitterSearch.search("modi");
-        twitterSearch.search("modi");
+        twitterSearch.searchStream("modi");
         //System.out.print(sentiment.findSentiment("I am extremely best"));
         /*for (Status status : statuses) {
             System.out.println(status.getCreatedAt()+"||||||||" +

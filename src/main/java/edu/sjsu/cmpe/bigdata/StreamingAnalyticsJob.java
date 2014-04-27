@@ -20,7 +20,7 @@ public class StreamingAnalyticsJob extends Job{
 	        	twitterStreamingKewords = twitterStreamingKewords.replace("]", "");
 	        	System.out.println("Streaming-BEGINS");
 	        	Tweets twitterSearch = new Tweets();
-	            twitterSearch.search(twitterStreamingKewords);
+	            twitterSearch.searchStream(twitterStreamingKewords);
 	        	}
 	        }
 
