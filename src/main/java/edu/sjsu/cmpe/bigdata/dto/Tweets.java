@@ -15,7 +15,69 @@ import twitter4j.conf.ConfigurationBuilder;
  */
 public class Tweets {
 	
-	
+	public void searchStream(String twitterStreamingKewords) {
+		 	        TwitterFactory tf = new TwitterFactory();
+		 	        Twitter twitter = tf.getInstance();
+		 	        TwitterStreamFactory ts = new TwitterStreamFactory();
+		 	        TwitterStream tsi = ts.getInstance();
+		 	        StatusListener listener = new StatusListener() {
+		 
+		 	            @Override
+		 	            public void onException(Exception arg0) {
+		 	                // TODO Auto-generated method stub
+		 
+		 	            }
+		 
+		 	            @Override
+		 	            public void onDeletionNotice(StatusDeletionNotice arg0) {
+		 	                // TODO Auto-generated method stub
+		 
+		 	            }
+		 
+		 	            @Override
+		 	            public void onScrubGeo(long arg0, long arg1) {
+		 	                // TODO Auto-generated method stub
+		 
+		 	            }
+		 
+		 	            @Override
+		 	            public void onStallWarning(StallWarning stallWarning) {
+		 
+		 	            }
+		 
+		 	            public void onStatus(Status status) {
+		 	            	RNTN sentiment = new RNTN();
+		 	            	User user = status.getUser();
+		 
+		 	                // gets Username
+		 	                String username = status.getUser().getScreenName();
+		 	                System.out.println(username);
+		 	                String profileLocation = user.getLocation();
+		 	                System.out.println(profileLocation);
+		 	                long tweetId = status.getId();
+		 	                System.out.println(tweetId);
+		 	                String content = status.getText();
+		 	                System.out.println(content +"\n");
+		 	                System.out.println(sentiment.findSentiment(content));
+		 	            }
+		 
+		 	            @Override
+		 	            public void onTrackLimitationNotice(int arg0) {
+		 	                // TODO Auto-generated method stub
+		 
+		 	            }};
+		 
+		 
+		 
+		 	        FilterQuery fq = new FilterQuery();
+		 
+		 	        String keywords[] = {twitterStreamingKewords};
+		 
+		 	        fq.track(keywords);
+		 
+		 	        tsi.addListener(listener);
+		 	        tsi.filter(fq);
+		 	        }
 
     public void search(String keyword) throws InterruptedException, IOException {
     	
