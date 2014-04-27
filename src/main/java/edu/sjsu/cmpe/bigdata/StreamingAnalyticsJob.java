@@ -1,5 +1,6 @@
 package edu.sjsu.cmpe.bigdata;
 
+import java.io.IOException;
 import java.util.List;
 
 import de.spinscale.dropwizard.jobs.Job;
@@ -20,7 +21,12 @@ public class StreamingAnalyticsJob extends Job{
 	        	twitterStreamingKewords = twitterStreamingKewords.replace("]", "");
 	        	System.out.println("Streaming-BEGINS");
 	        	Tweets twitterSearch = new Tweets();
-	            twitterSearch.searchStream(twitterStreamingKewords);
+	            try {
+					twitterSearch.searchStream(twitterStreamingKewords);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 	        	}
 	        }
 

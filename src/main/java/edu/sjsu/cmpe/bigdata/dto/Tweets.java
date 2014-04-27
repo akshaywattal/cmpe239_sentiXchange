@@ -8,6 +8,17 @@ import java.io.Writer;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.apache.hadoop.hbase.client.Get;
+import org.apache.hadoop.hbase.client.HTable;
+import org.apache.hadoop.hbase.client.Put;
+import org.apache.hadoop.hbase.client.Result;
+import org.apache.hadoop.hbase.client.ResultScanner;
+import org.apache.hadoop.hbase.client.Scan;
+import org.apache.hadoop.hbase.util.Bytes;
+
+
 import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
 /**
@@ -15,11 +26,19 @@ import twitter4j.conf.ConfigurationBuilder;
  */
 public class Tweets {
 	
-	public void searchStream(String twitterStreamingKewords) {
+	public void searchStream(String twitterStreamingKewords) throws IOException {
 		 	        TwitterFactory tf = new TwitterFactory();
 		 	        Twitter twitter = tf.getInstance();
 		 	        TwitterStreamFactory ts = new TwitterStreamFactory();
 		 	        TwitterStream tsi = ts.getInstance();
+		 	        
+		 	        //Creating HBase configuration
+		 	        Configuration config = HBaseConfiguration.create();
+		 	        //Creating HBase table for Streaming Sentiment Analysis
+		 	        final HTable table = new HTable(config, "streamingSentimentAnalysis");
+		 	        //Creating row1
+		 	        final Put p = new Put(Bytes.toBytes("row1"));
+		 	       
 		 	        StatusListener listener = new StatusListener() {
 		 
 		 	            @Override
@@ -49,16 +68,29 @@ public class Tweets {
 		 	            	RNTN sentiment = new RNTN();
 		 	            	User user = status.getUser();
 		 
-		 	                // gets Username
+		 	                // Get tweet Details & Sentiment
 		 	                String username = status.getUser().getScreenName();
-		 	                System.out.println(username);
+		 	                System.out.println("Username:" + username);
 		 	                String profileLocation = user.getLocation();
-		 	                System.out.println(profileLocation);
+		 	                System.out.println("Profile Location:" + profileLocation);
 		 	                long tweetId = status.getId();
-		 	                System.out.println(tweetId);
+		 	                System.out.println("Tweet ID:" +tweetId);
 		 	                String content = status.getText();
-		 	                System.out.println(content +"\n");
-		 	                System.out.println(sentiment.findSentiment(content));
+		 	                System.out.println("Tweet:" + content +"\n");
+		 	                int sentimentOut = sentiment.findSentiment(content);
+		 	                System.out.println("Sentiment:" + sentimentOut);
+		 	                
+		 	                // Adding value to HBase family "tweets"
+		 	                p.add(Bytes.toBytes("tweets"), Bytes.toBytes(String.valueOf(tweetId)),
+		 	            		  Bytes.toBytes(content + ", Sentiment:" + String.valueOf(sentimentOut)));
+		 	                
+		 	                try {
+		 	                // Inserting value to HBase family "tweets"
+								table.put(p);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 		 	            }
 		 
 		 	            @Override
@@ -66,18 +98,12 @@ public class Tweets {
 		 	                // TODO Auto-generated method stub
 		 
 		 	            }};
-		 
-		 
-		 
-		 	        FilterQuery fq = new FilterQuery();
-		 
-		 	        String keywords[] = {twitterStreamingKewords};
-		 
-		 	        fq.track(keywords);
-		 
-		 	        tsi.addListener(listener);
-		 	        tsi.filter(fq);
-		 	        }
+		 	            FilterQuery fq = new FilterQuery();
+		 	            String keywords[] = {twitterStreamingKewords};
+		 	            fq.track(keywords);
+		 	            tsi.addListener(listener);
+		 	            tsi.filter(fq);
+		 	            }
 
     public void search(String keyword) throws InterruptedException, IOException {
     	
