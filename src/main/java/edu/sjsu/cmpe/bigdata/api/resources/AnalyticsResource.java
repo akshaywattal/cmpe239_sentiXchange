@@ -61,10 +61,13 @@ public class AnalyticsResource {
     @Timed(name = "get-sentiment")
     public String getSentiment(@QueryParam("keyword") String  keyword) throws UnknownHostException, InterruptedException {
 		
+		Tweets twitterSearch = new Tweets();
+		twitterSearch.search(keyword);
+		
 		//while(true)
 		//{
-		int score = 0;
-		RNTN sentiment = new RNTN();
+		/*int score = 0;
+		//RNTN sentiment = new RNTN();
 		Tweets twitterSearch = new Tweets();
 		 List<Status> statuses = twitterSearch.search(keyword);
 		 for (Status status : statuses) {
@@ -82,9 +85,9 @@ public class AnalyticsResource {
 		 System.out.println("Total Sentiment: " + Math.abs(score) + "% " + ((score > 0)? "POSITVE":"NEGATIVE"));
 		 Thread.sleep(5000);
 		return null;
-			
+		*/	
 		//}
 		
-		
+		return null;
     }
 }

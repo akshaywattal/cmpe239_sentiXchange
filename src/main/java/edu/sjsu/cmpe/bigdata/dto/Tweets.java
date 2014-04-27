@@ -9,10 +9,56 @@ import twitter4j.conf.ConfigurationBuilder;
  */
 public class Tweets {
 
-    public List<Status> search(String keyword) {
+    public void search(String keyword) throws InterruptedException {
     	
-        TwitterFactory tf = new TwitterFactory();
-        Twitter twitter = tf.getInstance();
+		while(true)
+		{
+    	
+    	 TwitterFactory tf = new TwitterFactory();
+         Twitter twitter = tf.getInstance();
+         List<Status> statuses;
+         
+         Query query = new Query(keyword + " -filter:links -filter:replies -filter:images");
+         query.setCount(50);
+         query.setLocale("en");
+         query.setLang("en");
+         try {
+             QueryResult queryResult = twitter.search(query);
+             //return queryResult.getTweets();
+             statuses = queryResult.getTweets();
+             
+             int score = 0;
+     		RNTN sentiment = new RNTN();
+     		//Tweets twitterSearch = new Tweets();
+     		// List<Status> statuses = twitterSearch.search(keyword);
+     		 for (Status status : statuses) {
+     			 	int sent = sentiment.findSentiment(status.getText());
+     	            System.out.println(status.getCreatedAt()+"||||||||" + sent+"|||||||"+ status.getText());
+     	            if (sent == 2);
+     	            else if (sent < 2) score--;
+     	            else if (sent > 2) score++;
+     	            	            
+     	        }
+     		 score = score * 2;
+     		 if(score == 0)
+     		 System.out.println("Total Sentiment: " + score + " (NEUTRAL)");
+     		 else
+     		 System.out.println("Total Sentiment: " + Math.abs(score) + "% " + ((score > 0)? "POSITVE":"NEGATIVE"));
+     		 Thread.sleep(5000);
+             
+             
+         } catch (TwitterException e) {
+             // ignore
+             e.printStackTrace();
+         }
+       //  return Collections.emptyList(); 
+         
+		}
+		
+    	}
+    
+		//}
+       
        /* TwitterStreamFactory ts = new TwitterStreamFactory();
         TwitterStream tsi = ts.getInstance();
         StatusListener listener = new StatusListener() {
@@ -78,24 +124,13 @@ public class Tweets {
 
     }
     */
-        Query query = new Query(keyword + " -filter:links -filter:replies -filter:images");
-        query.setCount(50);
-        query.setLocale("en");
-        query.setLang("en");
-        try {
-            QueryResult queryResult = twitter.search(query);
-            return queryResult.getTweets();
-        } catch (TwitterException e) {
-            // ignore
-            e.printStackTrace();
-        }
-        return Collections.emptyList();  
+       
         
-    }
+    //}
 
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         
         Tweets twitterSearch = new Tweets();
         //List<Status> statuses = twitterSearch.search("modi");
