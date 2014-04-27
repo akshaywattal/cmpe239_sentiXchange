@@ -13,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import twitter4j.Status;
 import twitter4j.User;
 
+import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.List;
 
@@ -55,11 +56,12 @@ public class AnalyticsResource {
 	/**
 	 * API to get result of sentiment analysis
 	 * @throws InterruptedException 
+	 * @throws IOException 
 	 */
 	@POST
     @Path("/sentiment")
     @Timed(name = "get-sentiment")
-    public String getSentiment(@QueryParam("keyword") String  keyword) throws UnknownHostException, InterruptedException {
+    public String getSentiment(@QueryParam("keyword") String  keyword) throws InterruptedException, IOException {
 
 		Tweets twitterSearch = new Tweets();
 		twitterSearch.search(keyword);
