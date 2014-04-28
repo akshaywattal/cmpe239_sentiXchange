@@ -29,7 +29,7 @@ import twitter4j.conf.ConfigurationBuilder;
  * Created by shankey on 4/20/14.
  */
 public class Tweets {
-	
+	Put p;
 	public void searchStream(String twitterStreamingKewords) throws IOException {
 		 	        TwitterFactory tf = new TwitterFactory();
 		 	        Twitter twitter = tf.getInstance();
@@ -41,7 +41,7 @@ public class Tweets {
 		 	        //Creating HBase table for Streaming Sentiment Analysis
 		 	        final HTable table = new HTable(config, "streamingSentimentAnalysis");
 		 	        //Creating row1
-		 	        final Put p = new Put(Bytes.toBytes("row1"));
+		 	        //final Put p = new Put(Bytes.toBytes("row1"));
 		 	        
 		 	       BigDataServiceConfiguration configuration = new BigDataServiceConfiguration(); 
 		 	       final List<String> twitterStreamingKewordsList = configuration.getStompQueueName();
@@ -75,25 +75,34 @@ public class Tweets {
 		 	            	RNTN sentiment = new RNTN();
 		 	            	User user = status.getUser();
 		 
-		 	                // Get tweet Details & Sentiment
-		 	                String username = status.getUser().getScreenName();
-		 	                System.out.println("Username:" + username);
-		 	                String profileLocation = user.getLocation();
-		 	                System.out.println("Profile Location:" + profileLocation);
-		 	                long tweetId = status.getId();
-		 	                System.out.println("Tweet ID:" +tweetId);
-		 	                String content = status.getText();
+		 	            	String content = status.getText();
 		 	                System.out.println("Tweet:" + content +"\n");
-		 	                int sentimentOut = sentiment.findSentiment(content);
-		 	                System.out.println("Sentiment:" + sentimentOut);
 		 	                
 		 	                String keyword = "";
 		 	                for(String key:twitterStreamingKewordsList)
-		 	                if (content.contains(key)) keyword = key;  
+		 	                if (content.contains(key)) keyword = key;
+		 	                
+		 	                if(!keyword.equals("")) {
+		 	                	
+		 	                	// Get tweet Details & Sentiment
+			 	                String username = status.getUser().getScreenName();
+			 	                System.out.println("Username:" + username);
+			 	                String profileLocation = user.getLocation();
+			 	                System.out.println("Profile Location:" + profileLocation);
+			 	                long tweetId = status.getId();
+			 	                System.out.println("Tweet ID:" +tweetId);
+			 	                int sentimentOut = sentiment.findSentiment(content);
+				 	            System.out.println("Sentiment:" + sentimentOut);
+			 	                
+		 	                
+		 	                p = new Put(Bytes.toBytes(keyword));
 		 	               
 		 	                // Adding value to HBase family "tweets"
 		 	                p.add(Bytes.toBytes("tweets"), Bytes.toBytes(String.valueOf(tweetId)),
-				 	            		  Bytes.toBytes("Keyword:" + keyword + ", Sentiment:" + String.valueOf(sentimentOut)));
+				 	            		  Bytes.toBytes(String.valueOf(sentimentOut)));
+		 	                //p.add(Bytes.toBytes("tweets"), Bytes.toBytes(String.valueOf("Sentiment")),
+			 	            	//	  Bytes.toBytes(String.valueOf(sentimentOut)));
+		 	                
 		 	                
 		 	                try {
 		 	                // Inserting value to HBase family "tweets"
@@ -102,6 +111,7 @@ public class Tweets {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
+		 	               }
 		 	            }
 		 
 		 	            @Override

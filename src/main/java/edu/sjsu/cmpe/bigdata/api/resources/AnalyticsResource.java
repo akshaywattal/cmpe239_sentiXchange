@@ -63,6 +63,10 @@ public class AnalyticsResource {
     @Timed(name = "get-sentiment")
     public String getSentiment(@QueryParam("keyword") String  keyword) throws InterruptedException, IOException {
 
+		//for(String key:twitterStreamingKewordsList)
+          //   if (content.contains(key)) keyword = key; 
+		
+		
 		Tweets twitterSearch = new Tweets();
 		twitterSearch.search(keyword);
 
@@ -92,4 +96,5 @@ public class AnalyticsResource {
 
 		return null;
     }
+
 }
