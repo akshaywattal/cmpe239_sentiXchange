@@ -19,6 +19,9 @@ import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.util.Bytes;
 
 
+
+
+import edu.sjsu.cmpe.bigdata.config.BigDataServiceConfiguration;
 import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
 /**
@@ -38,6 +41,9 @@ public class Tweets {
 		 	        final HTable table = new HTable(config, "streamingSentimentAnalysis");
 		 	        //Creating row1
 		 	        final Put p = new Put(Bytes.toBytes("row1"));
+		 	        
+		 	       BigDataServiceConfiguration configuration = new BigDataServiceConfiguration(); 
+		 	       final List<String> twitterStreamingKewordsList = configuration.getStompQueueName();
 		 	       
 		 	        StatusListener listener = new StatusListener() {
 		 
@@ -80,9 +86,18 @@ public class Tweets {
 		 	                int sentimentOut = sentiment.findSentiment(content);
 		 	                System.out.println("Sentiment:" + sentimentOut);
 		 	                
+		 	                String keyword = "";
+		 	                for(String key:twitterStreamingKewordsList)
+		 	                if (content.contains(key)) keyword = key;  
+		 	               
+		 	                
 		 	                // Adding value to HBase family "tweets"
-		 	                p.add(Bytes.toBytes("tweets"), Bytes.toBytes(String.valueOf(tweetId)),
-		 	            		  Bytes.toBytes(content + ", Sentiment:" + String.valueOf(sentimentOut)));
+		 	                //  p.add(Bytes.toBytes("tweets"), Bytes.toBytes(String.valueOf(tweetId)),
+		 	            	//	  Bytes.toBytes(content + ", Sentiment:" + String.valueOf(sentimentOut)));
+		 	                
+		 	                
+		 	               p.add(Bytes.toBytes("tweets"), Bytes.toBytes(content),
+				 	            		  Bytes.toBytes(keyword + ", Sentiment:" + String.valueOf(sentimentOut)));
 		 	                
 		 	                try {
 		 	                // Inserting value to HBase family "tweets"
