@@ -21,6 +21,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 
 
 
+
 import edu.sjsu.cmpe.bigdata.config.BigDataServiceConfiguration;
 import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
@@ -110,7 +111,8 @@ public class Tweets {
 		 	            }};
 		 	            FilterQuery fq = new FilterQuery();
 		 	            
-		 	            String keywords[] = {twitterStreamingKewords};
+		 	            //String keywords[] = twitterStreamingKewords.toArray();
+		 	            String keywords[] = twitterStreamingKewordsList.toArray(new String[twitterStreamingKewordsList.size()]);
 		 	            fq.track(keywords);
 		 	            tsi.addListener(listener);
 		 	            tsi.filter(fq);
