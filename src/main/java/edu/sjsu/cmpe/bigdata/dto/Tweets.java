@@ -90,14 +90,9 @@ public class Tweets {
 		 	                for(String key:twitterStreamingKewordsList)
 		 	                if (content.contains(key)) keyword = key;  
 		 	               
-		 	                
 		 	                // Adding value to HBase family "tweets"
-		 	                //  p.add(Bytes.toBytes("tweets"), Bytes.toBytes(String.valueOf(tweetId)),
-		 	            	//	  Bytes.toBytes(content + ", Sentiment:" + String.valueOf(sentimentOut)));
-		 	                
-		 	                
-		 	               p.add(Bytes.toBytes("tweets"), Bytes.toBytes(content),
-				 	            		  Bytes.toBytes(keyword + ", Sentiment:" + String.valueOf(sentimentOut)));
+		 	                p.add(Bytes.toBytes("tweets"), Bytes.toBytes(String.valueOf(tweetId)),
+				 	            		  Bytes.toBytes("Keyword:" + keyword + ", Sentiment:" + String.valueOf(sentimentOut)));
 		 	                
 		 	                try {
 		 	                // Inserting value to HBase family "tweets"
@@ -114,6 +109,7 @@ public class Tweets {
 		 
 		 	            }};
 		 	            FilterQuery fq = new FilterQuery();
+		 	            
 		 	            String keywords[] = {twitterStreamingKewords};
 		 	            fq.track(keywords);
 		 	            tsi.addListener(listener);
