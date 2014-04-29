@@ -5,21 +5,49 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
-import java.util.Collections;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
-import twitter4j.*;
-import twitter4j.conf.ConfigurationBuilder;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.apache.hadoop.hbase.client.HTable;
+import org.apache.hadoop.hbase.client.Put;
+import org.apache.hadoop.hbase.util.Bytes;
+
+import twitter4j.FilterQuery;
+import twitter4j.Query;
+import twitter4j.QueryResult;
+import twitter4j.StallWarning;
+import twitter4j.Status;
+import twitter4j.StatusDeletionNotice;
+import twitter4j.StatusListener;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.TwitterStream;
+import twitter4j.TwitterStreamFactory;
+import twitter4j.User;
+import edu.sjsu.cmpe.bigdata.config.BigDataServiceConfiguration;
 /**
  * Created by shankey on 4/20/14.
  */
 public class Tweets {
-	
-	public void searchStream(String twitterStreamingKewords) {
+	Put p;
+	public void searchStream(String twitterStreamingKewords) throws IOException {
 		 	        TwitterFactory tf = new TwitterFactory();
 		 	        Twitter twitter = tf.getInstance();
 		 	        TwitterStreamFactory ts = new TwitterStreamFactory();
 		 	        TwitterStream tsi = ts.getInstance();
+		 	        
+		 	        //Creating HBase configuration
+		 	        Configuration config = HBaseConfiguration.create();
+		 	        //Creating HBase table for Streaming Sentiment Analysis
+		 	        final HTable table = new HTable(config, "streamingSentimentAnalysis");
+		 	        
+		 	       BigDataServiceConfiguration configuration = new BigDataServiceConfiguration(); 
+		 	       final List<String> twitterStreamingKewordsList = configuration.getStompQueueName();
+		 	       
 		 	        StatusListener listener = new StatusListener() {
 		 
 		 	            @Override
@@ -49,16 +77,41 @@ public class Tweets {
 		 	            	RNTN sentiment = new RNTN();
 		 	            	User user = status.getUser();
 		 
-		 	                // gets Username
-		 	                String username = status.getUser().getScreenName();
-		 	                System.out.println(username);
-		 	                String profileLocation = user.getLocation();
-		 	                System.out.println(profileLocation);
-		 	                long tweetId = status.getId();
-		 	                System.out.println(tweetId);
-		 	                String content = status.getText();
-		 	                System.out.println(content +"\n");
-		 	                System.out.println(sentiment.findSentiment(content));
+		 	            	String content = status.getText();
+		 	                System.out.println("Tweet:" + content +"\n");
+		 	                
+		 	                String keyword = "";
+		 	                for(String key:twitterStreamingKewordsList)
+		 	                if (content.contains(key)) keyword = key;
+		 	                
+		 	                if(!keyword.equals("")) {
+		 	                	
+		 	                	// Get tweet Details & Sentiment
+			 	                String username = status.getUser().getScreenName();
+			 	                System.out.println("Username:" + username);
+			 	                String profileLocation = user.getLocation();
+			 	                System.out.println("Profile Location:" + profileLocation);
+			 	                long tweetId = status.getId();
+			 	                System.out.println("Tweet ID:" +tweetId);
+			 	                int sentimentOut = sentiment.findSentiment(content);
+				 	            System.out.println("Sentiment:" + sentimentOut);
+			 	                
+		 	                
+		 	                p = new Put(Bytes.toBytes(keyword));
+		 	               
+		 	                // Adding value to HBase family "tweets"
+		 	                p.add(Bytes.toBytes("tweets"), Bytes.toBytes(String.valueOf(tweetId)),
+				 	            		  Bytes.toBytes(String.valueOf(sentimentOut)));
+		 	                
+		 	                
+		 	                try {
+		 	                // Inserting value to HBase family "tweets"
+								table.put(p);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+		 	               }
 		 	            }
 		 
 		 	            @Override
@@ -66,18 +119,14 @@ public class Tweets {
 		 	                // TODO Auto-generated method stub
 		 
 		 	            }};
-		 
-		 
-		 
-		 	        FilterQuery fq = new FilterQuery();
-		 
-		 	        String keywords[] = {twitterStreamingKewords};
-		 
-		 	        fq.track(keywords);
-		 
-		 	        tsi.addListener(listener);
-		 	        tsi.filter(fq);
-		 	        }
+		 	            FilterQuery fq = new FilterQuery();
+		 	            
+		 	            //String keywords[] = twitterStreamingKewords.toArray();
+		 	            String keywords[] = twitterStreamingKewordsList.toArray(new String[twitterStreamingKewordsList.size()]);
+		 	            fq.track(keywords);
+		 	            tsi.addListener(listener);
+		 	            tsi.filter(fq);
+		 	            }
 
     public void search(String keyword) throws InterruptedException, IOException {
     	
@@ -118,9 +167,9 @@ public class Tweets {
      			 	int sent = sentiment.findSentiment(status.getText());
      	            System.out.println(status.getCreatedAt()+"||||||||" + sent+"|||||||"+ status.getText());
      	            printWriter.write(status.getCreatedAt()+"|" + sent+"|"+ status.getText()+'\n');
-     	            if (sent == 2);
-     	            else if (sent < 2) {score--; negative++;}
-     	            else if (sent > 2) {score++; positive ++;}
+     	            //if (sent == 2);
+     	            if (sent < 2) {score--; negative++;}
+     	            else if (sent >= 2) {score++; positive ++;}
      	            	            
      	        }
      		 score = score * 2;
@@ -137,8 +186,23 @@ public class Tweets {
      			 System.out.println("Total Sentiment: " + Math.abs(score) + "% " + ((score > 0)? "POSITVE":"NEGATIVE"));
      			 printWriter.write("Total Sentiment: " + Math.abs(score) + "% " + ((score > 0)? "POSITVE":"NEGATIVE")+'\n');
      			 printWriter.write("\n\n----------------------------------------------------------------------------\n\n");
+     			 int finalScore = positive-negative;
+     			 Timestamp stamp = new Timestamp(System.currentTimeMillis());
+     			 Date d = new Date(stamp.getTime());
      			 
-     		 }
+     			 
+     			//Creating HBase configuration
+		 	    Configuration config = HBaseConfiguration.create();
+		 	    //Creating HBase table for Streaming Sentiment Analysis
+		 	    HTable table = new HTable(config, "searchAPISentimentAnalysis");
+		 	    Put p = new Put(Bytes.toBytes(keyword));  
+                // Adding value to HBase family "tweets"
+                p.add(Bytes.toBytes("tweets"), Bytes.toBytes(String.valueOf(stamp)),
+	 	            		  Bytes.toBytes(String.valueOf(finalScore)));
+                
+                // Inserting value to HBase family "tweets"
+				table.put(p);
+				}
      		 
             // BufferedWriter bufferedWriter = null;
              try {
@@ -154,7 +218,7 @@ public class Tweets {
      		 
      		 
      		 
-     		 Thread.sleep(5000);
+     		 Thread.sleep(60000);
              
              
          } catch (TwitterException e) {
