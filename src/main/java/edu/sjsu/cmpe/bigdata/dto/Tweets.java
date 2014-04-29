@@ -5,26 +5,30 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
-import java.util.Collections;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
-import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Put;
-import org.apache.hadoop.hbase.client.Result;
-import org.apache.hadoop.hbase.client.ResultScanner;
-import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.util.Bytes;
 
-
-
-
-
+import twitter4j.FilterQuery;
+import twitter4j.Query;
+import twitter4j.QueryResult;
+import twitter4j.StallWarning;
+import twitter4j.Status;
+import twitter4j.StatusDeletionNotice;
+import twitter4j.StatusListener;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.TwitterStream;
+import twitter4j.TwitterStreamFactory;
+import twitter4j.User;
 import edu.sjsu.cmpe.bigdata.config.BigDataServiceConfiguration;
-import twitter4j.*;
-import twitter4j.conf.ConfigurationBuilder;
 /**
  * Created by shankey on 4/20/14.
  */
@@ -40,8 +44,6 @@ public class Tweets {
 		 	        Configuration config = HBaseConfiguration.create();
 		 	        //Creating HBase table for Streaming Sentiment Analysis
 		 	        final HTable table = new HTable(config, "streamingSentimentAnalysis");
-		 	        //Creating row1
-		 	        //final Put p = new Put(Bytes.toBytes("row1"));
 		 	        
 		 	       BigDataServiceConfiguration configuration = new BigDataServiceConfiguration(); 
 		 	       final List<String> twitterStreamingKewordsList = configuration.getStompQueueName();
@@ -100,8 +102,6 @@ public class Tweets {
 		 	                // Adding value to HBase family "tweets"
 		 	                p.add(Bytes.toBytes("tweets"), Bytes.toBytes(String.valueOf(tweetId)),
 				 	            		  Bytes.toBytes(String.valueOf(sentimentOut)));
-		 	                //p.add(Bytes.toBytes("tweets"), Bytes.toBytes(String.valueOf("Sentiment")),
-			 	            	//	  Bytes.toBytes(String.valueOf(sentimentOut)));
 		 	                
 		 	                
 		 	                try {
@@ -167,9 +167,9 @@ public class Tweets {
      			 	int sent = sentiment.findSentiment(status.getText());
      	            System.out.println(status.getCreatedAt()+"||||||||" + sent+"|||||||"+ status.getText());
      	            printWriter.write(status.getCreatedAt()+"|" + sent+"|"+ status.getText()+'\n');
-     	            if (sent == 2);
-     	            else if (sent < 2) {score--; negative++;}
-     	            else if (sent > 2) {score++; positive ++;}
+     	            //if (sent == 2);
+     	            if (sent < 2) {score--; negative++;}
+     	            else if (sent >= 2) {score++; positive ++;}
      	            	            
      	        }
      		 score = score * 2;
@@ -186,8 +186,23 @@ public class Tweets {
      			 System.out.println("Total Sentiment: " + Math.abs(score) + "% " + ((score > 0)? "POSITVE":"NEGATIVE"));
      			 printWriter.write("Total Sentiment: " + Math.abs(score) + "% " + ((score > 0)? "POSITVE":"NEGATIVE")+'\n');
      			 printWriter.write("\n\n----------------------------------------------------------------------------\n\n");
+     			 int finalScore = positive-negative;
+     			 Timestamp stamp = new Timestamp(System.currentTimeMillis());
+     			 Date d = new Date(stamp.getTime());
      			 
-     		 }
+     			 
+     			//Creating HBase configuration
+		 	    Configuration config = HBaseConfiguration.create();
+		 	    //Creating HBase table for Streaming Sentiment Analysis
+		 	    HTable table = new HTable(config, "searchAPISentimentAnalysis");
+		 	    Put p = new Put(Bytes.toBytes(keyword));  
+                // Adding value to HBase family "tweets"
+                p.add(Bytes.toBytes("tweets"), Bytes.toBytes(String.valueOf(stamp)),
+	 	            		  Bytes.toBytes(String.valueOf(finalScore)));
+                
+                // Inserting value to HBase family "tweets"
+				table.put(p);
+				}
      		 
             // BufferedWriter bufferedWriter = null;
              try {
@@ -203,7 +218,7 @@ public class Tweets {
      		 
      		 
      		 
-     		 Thread.sleep(5000);
+     		 Thread.sleep(60000);
              
              
          } catch (TwitterException e) {
