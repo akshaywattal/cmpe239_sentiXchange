@@ -28,7 +28,7 @@ public class BigDataService extends Service<BigDataServiceConfiguration> {
 	bootstrap.addBundle(new AssetsBundle());
 	bootstrap.addBundle(new ViewBundle());
 	//For Streaming Analytics Job WIP
-	//bootstrap.addBundle(new JobsBundle("edu.sjsu.cmpe.bigdata"));
+	bootstrap.addBundle(new JobsBundle("edu.sjsu.cmpe.bigdata"));
     }
 
     @Override
