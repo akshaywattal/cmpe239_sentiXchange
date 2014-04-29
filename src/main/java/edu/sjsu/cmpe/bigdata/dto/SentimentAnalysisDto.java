@@ -2,40 +2,58 @@
 
 package edu.sjsu.cmpe.bigdata.dto;
 
-import java.lang.reflect.Array;
-import java.net.UnknownHostException;
-import java.util.Arrays;
+import com.mongodb.*;
+import edu.sjsu.cmpe.bigdata.domain.Sentiment;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
-import com.mongodb.MongoClient;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 public class SentimentAnalysisDto {
-	private String response;
+	private Sentiment response;
 	
-	public String getSentiment() throws UnknownHostException {
-		
+	public Sentiment getSentiment() throws UnknownHostException {
+
+           response = new Sentiment();
 		// Creating connection with MongoDB
 		MongoClient client = new MongoClient();
 		DB courseDB = client.getDB("bigdata");
-		DBCollection collection = courseDB.getCollection("analysis");
+		DBCollection collection = courseDB.getCollection("data");
 		
 		// Creating query for fetching details of latest analysis
 		DBObject query1 = new BasicDBObject()
-						.append("business_id", "VFslQjSgrw4Mu5_Q1xk1KQ");
+						.append("time", "2222");
 
 		//DBObject query2 = new BasicDBObject()
 			//			.append("date", -1);
 		
 		// Executing query
 		//DBCursor cursor = collection.find(query1).sort(query2).limit(1);
-		DBCursor cursor = collection.find(query1).limit(1);
-		
+		DBCursor cursor = collection.find(query1).limit(10);
+        ArrayList<Integer> temp = new ArrayList<Integer>();
+        double[] tempArray = new double[cursor.size()];
+        int i=0;
+        for(DBObject dp : cursor){
+           double pos = Double.parseDouble(dp.get("pos").toString());
+            //int pos = Integer.parseInt(dp.get("pos").toString());
+            double neg = Double.parseDouble(dp.get("neg").toString());
+            //int neg =  Integer.parseInt(dp.get("neg").toString());
+            //temp.add(Integer.parseInt(dp.get("values").toString()));
+            tempArray[i++] = pos - neg;
+
+        }
+
+
+        response.setValues(tempArray);
+
+        /*response = "{\"values\":[";
+		for(DBObject dp : cursor){
+                int sentiment = Integer.parseInt(dp.get("pos").toString()) - Integer.parseInt(dp.get("neg").toString());
+               response =  response + sentiment + ;
+              */
+
+
 		// Fetching "keys" from cursor	
-		DBObject cur = cursor.next();
+		/*DBObject cur = cursor.next();
 		String business_id = (String) cur.get("business_id");
 		int positive = ((Number) cur.get("positive")).intValue();
 		int negative = ((Number) cur.get("negative")).intValue();
@@ -53,7 +71,8 @@ public class SentimentAnalysisDto {
 		              + "\"sentiment\":" + "\"positive\"," + "\"value\":" + "\"" + positive + "\"" + "},{"
 		              + "\"sentiment\":" + "\"negative\"," + "\"value\":"  + "\"" + negative + "\"" + "},{"
 		              + "\"sentiment\":" + "\"notevaluated\"," + "\"value\":"  + "\"" + notEval + "\"" + "}]";
-		     
+		*/
 		 return response;
+
 		}
 	}
