@@ -7,6 +7,7 @@ import com.yammer.dropwizard.config.Environment;
 import com.yammer.dropwizard.views.ViewBundle;
 
 import de.spinscale.dropwizard.jobs.JobsBundle;
+import edu.sjsu.cmpe.bigdata.api.resources.AnalyticsResource;
 import edu.sjsu.cmpe.bigdata.api.resources.UserResource;
 import edu.sjsu.cmpe.bigdata.config.BigDataServiceConfiguration;
 import edu.sjsu.cmpe.bigdata.ui.resources.DashboardResource;
