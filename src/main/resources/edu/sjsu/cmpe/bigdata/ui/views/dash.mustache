@@ -267,7 +267,7 @@
 
 function refreshGraph () {
     //debugger;
-    d3.json("/bigdata/v1/analytics/sentiment", function(d){
+    d3.json("/bigdata/v1/analytics/sentiment?keyword=" + ($('#searchbox').val() || "modi"), function(d){
 
       data = data.concat(d.values);
    /* var x = d3.scale.linear().domain([0, data.length]).range([0, w]);

@@ -1,34 +1,17 @@
 package edu.sjsu.cmpe.bigdata.dto;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.Writer;
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
 
+import edu.sjsu.cmpe.bigdata.config.BigDataServiceConfiguration;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.util.Bytes;
+import twitter4j.*;
 
-import twitter4j.FilterQuery;
-import twitter4j.Query;
-import twitter4j.QueryResult;
-import twitter4j.StallWarning;
-import twitter4j.Status;
-import twitter4j.StatusDeletionNotice;
-import twitter4j.StatusListener;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
-import twitter4j.TwitterStream;
-import twitter4j.TwitterStreamFactory;
-import twitter4j.User;
-import edu.sjsu.cmpe.bigdata.config.BigDataServiceConfiguration;
+import java.io.*;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
 /**
  * Created by shankey on 4/20/14.
  */
