@@ -196,7 +196,7 @@
 /* implementation heavily influenced by http://bl.ocks.org/1166403 */
         
        
-        window.setInterval(refreshGraph, 3000);
+        window.setInterval(refreshGraph, 10000);
       
         // while (true){
         //   plot();
@@ -332,6 +332,7 @@ var t = graph.transition().duration(1).each('end', function () {
 
   $('#search').click(function() { 
 
+        d3.selectAll("path").remove();
         $('#keywordfield').text($('#searchbox').val()); 
         $.ajax({
             url: '/bigdata/v1/analytics/sentiment?keyword='+ $('#searchbox').val(),

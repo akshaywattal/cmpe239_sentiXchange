@@ -201,7 +201,7 @@ public class Tweets {
      		 
      		 
      		 
-     		 Thread.sleep(60000);
+     		 Thread.sleep(9000);
              
              
          } catch (TwitterException e) {
