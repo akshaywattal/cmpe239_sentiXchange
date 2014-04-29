@@ -1,201 +1,349 @@
 <!doctype html>
 <html class="no-js" lang="en">
-   <head>
-      <meta charset="utf-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>SentiXchange | DataInsights</title>
-      <link rel="stylesheet" href="../assets/css/normalize.css" />
-      <link rel="stylesheet" href="../assets/css/foundation.css" />
-      <link rel="stylesheet" href="../assets/img/foundation-icons/foundation-icons.css" />
-      <link href="../assets/css/jquery.neosmart.fb.wall.css" rel="stylesheet" type="text/css"/>
-      <script src="../assets/js/modernizr.js"></script>
-      <script src="http://maps.googleapis.com/maps/api/js?sensor=false&language=en"></script>
-      <script src="../assets/js/vendor/angular.min_v1.2.3.js"></script>
- 	  <script src="http://d3js.org/d3.v3.min.js"></script>
-      <script src="../assets/js/app.js"></script> 
-       
-      <style>
-         #map_canvas{
-         width:100%;
-         height:35em;
-         }
-		.arc path {
-  		stroke: #fff;
-		}
-	  </style>
-   </head>
-   
-   <body ng-app="myApp" ng-controller="MyCtrl">
-      <div id="fb-root"></div>
-      <script>(function(d, s, id) {
-         var js, fjs = d.getElementsByTagName(s)[0];
-         if (d.getElementById(id)) return;
-         js = d.createElement(s); js.id = id;
-         js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
-         fjs.parentNode.insertBefore(js, fjs);
-         }(document, 'script', 'facebook-jssdk'));
-      </script>
-      
-      <!-- Header section of the App -->
-      <div class="fixed">
-         <nav class="top-bar" data-topbar>
-            <ul class="title-area">
-               <li class="name">
-                  <h1 style="font-size:2em;"><a href="#">Senti<span style="color:#2ba6cb">X</span>change</a></h1>
-               </li>
-               <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-            </ul>
-            <section class="top-bar-section">
-               <ul class="right">
-                  <li class="has-dropdown">
-                     <a href="#" data-dropdown="drop1" ><img src="../assets/img/settings-s.png"></a> 
-                     <ul class="dropdown">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SentiXchange | DataInsights</title>
+  <link rel="stylesheet" href="../assets/css/normalize.css" />
+  <link rel="stylesheet" href="../assets/css/foundation.css" />
+  <link rel="stylesheet" href="../assets/img/foundation-icons/foundation-icons.css" />
+  <link href="../assets/css/jquery.neosmart.fb.wall.css" rel="stylesheet" type="text/css"/>
+  <script src="../assets/js/modernizr.js"></script>
+  <script src="http://maps.googleapis.com/maps/api/js?sensor=false&language=en"></script>
+  <script src="../assets/js/vendor/angular.min_v1.2.3.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="../assets/js/app.js"></script> 
+
+  <style>
+   #map_canvas{
+     width:100%;
+     height:35em;
+   }
+   .arc path {
+    stroke: #fff;
+  }
+    input { font-size: 18px; }
+
+  /************************CSS for the chart*************************************/
+  path {
+    stroke: rgb(175, 38, 19);
+    stroke-width: .5;
+    fill: none;
+  }
+
+  .axis {
+    shape-rendering: crispEdges;
+  }
+
+  .x.axis line {
+    stroke: lightgrey;
+    stroke-opacity: .1;
+  }
+
+  .x.axis .minor {
+    stroke-opacity: .2;
+  }
+
+  .x.axis path {
+    display: none;
+  }
+
+  .y.axis line, .y.axis path {
+    fill: none;
+    stroke: #000;
+    stroke-width: 1;
+  }
+
+  /************************CSS for the chart*************************************/
+
+</style>
+</head>
+
+<body ng-app="myApp" ng-controller="MyCtrl">
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+   var js, fjs = d.getElementsByTagName(s)[0];
+   if (d.getElementById(id)) return;
+   js = d.createElement(s); js.id = id;
+   js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+   fjs.parentNode.insertBefore(js, fjs);
+ }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<!-- Header section of the App -->
+<div class="fixed">
+ <nav class="top-bar" data-topbar>
+  <ul class="title-area">
+   <li class="name">
+    <h1 style="font-size:2em;"><a href="#">Senti<span style="color:#2ba6cb">X</span>change</a></h1>
+  </li>
+  <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+</ul>
+<section class="top-bar-section">
+ <ul class="right">
+  <li class="has-dropdown">
+   <a href="#" data-dropdown="drop1" ><img src="../assets/img/settings-s.png"></a> 
+   <ul class="dropdown">
                         <!--<li><a href="#">Account</a></li>
                         <li class="divider"></li>
                         <li><a href="#">Configurations</a></li>
                         <li class="divider"></li>-->
-                        <li><a href="/bigdata" onclick="docCookies.removeItem(docCookies.getItem("senti"))">Logout</a></li>
-                     </ul>
-                  </li>
-               </ul>
-            </section>
-         </nav>
-      </div>
-      
-      <!-- Main content section -->
-      <dl class="tabs vertical" data-tab>
-         <!--<dd class="active"><a href="#panel1a">Competition</a></dd>-->
-         <!--<dd><a href="#panel2a">Social Media Integration</a></dd>-->
-         <dd><a href="#panel3a">Twitter Sentiment Analysis</a></dd>
-         <!--<dd><a href="#panel4a">Tab 4</a></dd>-->
-      </dl>
-      <div class="tabs-content vertical" style="height:auto; min-height:50em;">
-        <!-- <div class="content active" id="panel1a" style="width:100%; height:100%">
-            <map id="map_canvas"></map>
-         </div>-->
-         <!--<div class="content" id="panel2a">
-            <div class="row">
-               <ul class="small-block-grid-2">
-                  <li>
-                     <div class="large-6 columns" style="background-color:#e4e4e4; height: 450px; width:450px">
-                        <h4><b>Live Facebook Feed</b></h4>
-                        <div id="example1" style="width: auto; height:350px; overflow-y:scroll;">                           
-                     </div>
-                  </li>
-                  <li>
-                     <div class="large-6 columns" style="background-color:#e4e4e4; height: 450px; width:470px">
-                        <h4><b>Live Twitter Feed</b></h4>
-                        <div id="twitter" style="width:450px">
-                           <a class="twitter-timeline" href="https://twitter.com/CodeAssassins1" data-widget-id="406567473492664320">Tweets by @CodeAssassins1</a>
-                        </div>
-                        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-                     </div>
-                  </li>
-               </ul>
+                        <li><a href="/bigdata" onclick="docCookies.removeItem(docCookies.getItem('senti')">Logout</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </section>
+              </nav>
             </div>
-            <div class="row">
-               <ul class="small-block-grid-2">
-                  <li>
-                     <div class="large-6 columns" style="background-color:#e4e4e4; height: 450px; width:450px">
-                        <h4><b>Facebook Stats</b></h4>
-                        <div class="fb-like-box" data-href="http://www.facebook.com/CodeAssassins" data-width="430px" data-height="400px" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true">
-                        </div>
-                  </li>
-                  <li>
-                     <div class="large-6 columns" style="background-color:#e4e4e4; height: 450px; width:450px">
-                        <h4><b>Yelp Feed</b></h4>
-                        <div id='yelpwidget' style="overflow-y:scroll; height:400px"></div>
-                        <script>(function() { var s = document.createElement("script");s.async = true;s.onload = s.onreadystatechange = function(){getYelpWidget("pampas-palo-alto","400","RED","y","y","3");};s.src='http://chrisawren.com/widgets/yelp/yelpv2.js' ;var x = document.getElementsByTagName('script')[0];x.parentNode.insertBefore(s, x);})();
-                        </script>
-                     </div>
-                  </li>
-               </ul>
-            </div>
-         </div>-->
-         <div class="content" id="panel3a">
-             <div class="row">
-                <ul class="small-block-grid-2">
-                   <li>
-                      <div class="large-6 columns" style="background-color:#e4e4e4; height: 520px; width:450px">
-                         <h4><b>Sentiment Analysis - View 1</b></h4>
-                            <pieplot id="sentiment"></pieplot>
-                            <p><b><span style="color:green">Green - Positive</span></b></p>
-                            <p><b><span style="color:yellow">Yellow - Neutral</span></b></p>
-                            <p><b><span style="color:red">Red - Negative</span></b><p>
-                            <p><b><span style="color:orange">Orange - Not Evaluated</b></p>                           
-                      </div>
-                   </li>
-                   <li>
-                      <div class="large-6 columns" style="background-color:#e4e4e4; height: 520px; width:470px">
-                        <h4><b>Sentiment Analysis - View 2</b></h4>
-                            <donutplot id="sentimentdonut"></donutplot>
-                      </div>
-                   </li>
-                </ul>
-             </div>
-         </div>
+
+            <!-- Main content section -->
+            <!-- <dl class="tabs vertical" data-tab> -->
+             <!--<dd class="active"><a href="#panel1a">Competition</a></dd>-->
+             <!--<dd><a href="#panel2a">Social Media Integration</a></dd>-->
+             <!-- <dd><a href="#panel3a">Twitter Sentiment Analysis</a></dd>  -->
+             <!--<dd><a href="#panel4a">Tab 4</a></dd>-->
+           <!-- </dl> -->
+           <!-- <div class="tabs-content vertical" style="height:auto; min-height:50em;"> -->
+
+             <div class="content" id="panel3a">
+              <!-- <div class="row"> -->
+                 <div style="background-color:#333333; height: 650px; width:100%; border:5px solid #333333;">
+                   <div style="height=15%; padding:10px;">
+                   <div class="small-10 columns">
+                    <input id="searchbox" type="text" placeholder="Keyword">
+                    </div>
+                    <div class="small-2 columns">
+                    <a href="#" id="search" class="button postfix">Search</a></div>
+                   </div><br><br>
+                   <div>
+                    <h4 style="color:rgb(40, 152, 216); padding:10px; height:15%"><b> Sentiment Analysis - Dynamic Chart</b></h4>
+                    </div>
+                    <div style = "padding:10px;">
+                    <div id="igraph" class="aGraph" style="background-color:lightgrey; border-radius:10px; height:68%; width:75%; padding:10px; align:center;"></div>
+                    </div>
+                 </div>
+            <!--  </div> -->
+           </div>
          <!--<div class="content" id="panel4a">
             <p>Panel 4 content goes here.</p>
-         </div>-->
-      </div>
-      
-      <!-- Footer section -->
-      <div class="footer" style="background-color:#fff; margin-top:2em;">
+          </div>-->
+        <!-- </div> -->
+
+        <!-- Footer section -->
+        <div class="footer" style="background-color:#fff; margin-top:2em;">
          <div class="medium-4 medium-4 push-8 columns">
-            <ul class="inline-list right">
-               <li><a href="http://www.twitter.com/" class="twitter">
-                  <i class="fi-social-twitter" style="font-size:4em;"></i>
-                  </a>
-               </li>
-               <li><a href="http://www.facebook.com/" class="facebook">
-                  <i class="fi-social-facebook" style="font-size:4em;"></i>
-                  </a>
-               </li>
-               <li><a href="/contact" class="mail">
-                  <i class="fi-mail" style="font-size:4em;"></i>
-                  </a>
-               </li>
-            </ul>
-         </div>
-         <div class="medium-8 medium-8 pull-4 columns">
-            <a href="#">
-               <h1 style="font-size:2em;">Senti<span style="color:#2ba6cb">X</span>change</h1>
-            </a>
-            <ul class="inline-list">
-               <li><a href="#">About</a></li>
-               <li><a href="#">Blog</a></li>
-               <li><a href="#">News</a></li>
-               <li><a href="#">Contact</a></li>
-               <li><a href="#">Sitemap</a></li>
-            </ul>
-            <p class="copyright">&copy; 2014 DataInsights Inc. All rights reserved.</p>
-         </div>
-      </div>
+          <ul class="inline-list right">
+           <li><a href="http://www.twitter.com/" class="twitter">
+            <i class="fi-social-twitter" style="font-size:4em;"></i>
+          </a>
+        </li>
+        <li><a href="http://www.facebook.com/" class="facebook">
+          <i class="fi-social-facebook" style="font-size:4em;"></i>
+        </a>
+      </li>
+      <li><a href="/contact" class="mail">
+        <i class="fi-mail" style="font-size:4em;"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+<div class="medium-8 medium-8 pull-4 columns">
+  <a href="#">
+   <h1 style="font-size:2em;">Senti<span style="color:#2ba6cb">X</span>change</h1>
+ </a>
+ <ul class="inline-list">
+   <li><a href="#">About</a></li>
+   <li><a href="#">Blog</a></li>
+   <li><a href="#">News</a></li>
+   <li><a href="#">Contact</a></li>
+   <li><a href="#">Sitemap</a></li>
+ </ul>
+ <p class="copyright">&copy; 2014 DataInsights Inc. All rights reserved.</p>
+</div>
+</div>
+
+<!-- Scripts -->
+<script src="../assets/js/jquery.js"></script>
+<script src="../assets/js/foundation.min.js"></script>
+<script src="../assets/js/jquery.neosmart.fb.wall.js" type="text/javascript"></script>
+<script src="../assets/js/stomp.js"></script> 
+<script src="../assets/js/ws.js"></script>
+<script src="../assets/js/cookies.js"></script>
+<script src="http://mbostock.github.com/d3/d3.v2.js"></script>
+<script type="text/javascript">
+ $(function(){       
+   $('#example1').fbWall({ id:'CodeAssassins',accessToken:'CAAUSL0z1mCQBAJswvpR3urkGKlvPD3ijusMVuThG2IjW6CBbHaFsf3lybQdf4edufZAGhZA10BLSBLIiEDuzXq9m1mqWWslZC47UMUmsRUkaDxi19Faz3vqvI8aOR7TSa90zFQAMvdZB8bihfivw0GjmO9ZA8ISEADMzyH016ocZBMTJElLJtHPyW8S7zEDBoZD'});
+ });
+
+</script>
+<script>
+ $(document).foundation({     
+   orbit: {
+     navigation_arrows: false,       
+     slide_number: false,
+     bullets: false,
+     resume_on_mouseout: true,
+     timer_speed: 8000
+   }
+ });
+
+/*******************************   CHART PLOTTING FOR TWITTER SENTIMENT ************************/
+
+/* implementation heavily influenced by http://bl.ocks.org/1166403 */
+        
+       
+        window.setInterval(refreshGraph, 3000);
       
-      <!-- Scripts -->
-      <script src="../assets/js/jquery.js"></script>
-      <script src="../assets/js/foundation.min.js"></script>
-      <script src="../assets/js/jquery.neosmart.fb.wall.js" type="text/javascript"></script>
-      <script src="../assets/js/stomp.js"></script> 
-      <script src="../assets/js/ws.js"></script>
-      <script src="../assets/js/cookies.js"></script>
-      <script type="text/javascript">
-         $(function(){       
-         $('#example1').fbWall({ id:'CodeAssassins',accessToken:'CAAUSL0z1mCQBAJswvpR3urkGKlvPD3ijusMVuThG2IjW6CBbHaFsf3lybQdf4edufZAGhZA10BLSBLIiEDuzXq9m1mqWWslZC47UMUmsRUkaDxi19Faz3vqvI8aOR7TSa90zFQAMvdZB8bihfivw0GjmO9ZA8ISEADMzyH016ocZBMTJElLJtHPyW8S7zEDBoZD'});
-         });
+        // while (true){
+        //   plot();
+        //   delay(5000);
+        // }
+        var data = [3, 6, 2, 7, 5, 2, 0, 3, 8, 9, 2, 5, 9, 3, 6, 3, 6, 2, 7, 5, 2, 1, 3, 8, 9, 2, 5, 9, 2, 7];
+
+        // function plot(){
+        // d3.json("/bigdata/v1/analytics/sentiment", function(d){
+        // define dimensions of graph
+        var m = [80, 80, 80, 80]; // margins
+        var w = 1000 - m[1] - m[3]; // width
+        var h = 400 - m[0] - m[2]; // height
+        
+        // create a simple data array that we'll plot with a line (this array represents only the Y values, X will just be the index location)
          
-      </script>
-      <script>
-         $(document).foundation({     
-         orbit: {
-         navigation_arrows: false,       
-         slide_number: false,
-         bullets: false,
-         resume_on_mouseout: true,
-         timer_speed: 8000
-         }
-         });
-         
-      </script>
-   </body>
+         // data = data.concat(d.values);
+        // X scale will fit all values from data[] within pixels 0-w
+        var x = d3.scale.linear().domain([0, data.length]).range([0, w]);
+        // Y scale will fit values from 0-10 within pixels h-0 (Note the inverted domain for the y-scale: bigger is up!)
+        var y = d3.scale.linear().domain([-50,50]).range([h, 0]);
+            // automatically determining max range can work something like this
+            // var y = d3.scale.linear().domain([0, d3.max(data)]).range([h, 0]);
+ 
+        // create a line function that can convert data[] into x and y points
+        var line = d3.svg.line().interpolate("linear")
+            // assign the X function to plot our line as we wish
+            .x(function(d,i) { 
+                // verbose logging to show what's actually being done
+                //console.log('Plotting X value for data point: ' + d + ' using index: ' + i + ' to be at: ' + x(i) + ' using our xScale.');
+                // return the X coordinate where we want to plot this datapoint
+                return x(i); 
+            })
+            .y(function(d) { 
+                // verbose logging to show what's actually being done
+                //console.log('Plotting Y value for data point: ' + d + ' to be at: ' + y(d) + " using our yScale.");
+                // return the Y coordinate where we want to plot this datapoint
+                return y(d); 
+            })
+ 
+            // Add an SVG element with the desired dimensions and margin.
+            //debugger;
+            var graph = d3.select("#igraph").append("svg:svg")
+                  .attr("width", w + m[1] + m[3])
+                  .attr("height", h + m[0] + m[2])
+                .append("svg:g")
+                  .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
+ 
+            // create yAxis
+            var xAxis = d3.svg.axis().scale(x).tickSize(-h).tickSubdivide(true);
+            // Add the x-axis.
+            graph.append("svg:g")
+                  .attr("class", "x axis")
+                  .attr("transform", "translate(0," + h + ")")
+                  .call(xAxis);
+ 
+ 
+            // create left yAxis
+            var yAxisLeft = d3.svg.axis().scale(y).ticks(4).orient("left");
+            // Add the y-axis to the left
+            graph.append("svg:g")
+                  .attr("class", "y axis")
+                  .attr("transform", "translate(-25,0)")
+                  .call(yAxisLeft);
+            
+            // Add the line by appending an svg:path element with the data line we created above
+            // do this AFTER the axes above so that the line is above the tick-lines
+            graph.append("svg:path").attr("d", line(data));
+
+          // });
+
+
+function refreshGraph () {
+    //debugger;
+    d3.json("/bigdata/v1/analytics/sentiment", function(d){
+
+      data = data.concat(d.values);
+   /* var x = d3.scale.linear().domain([0, data.length]).range([0, w]);
+    var y = d3.scale.linear().domain(d3.extent(data)).range([h, 0]);
+    
+    //line.exit().remove
+    graph.selectAll(".xAxis")
+        .transition()
+        .duration(10)
+        .call(xAxis);
+
+
+    graph.selectAll("line").data(data).enter()
+     .append("svg:path")
+     .attr("d", line(data))
+  });
+*/
+ x.domain([0, data.length]);
+
+ // graph.selectAll("line").data([]).exit().remove();
+
+     // .append("svg:path")
+     // .attr("d", line(data));
+
+var t = graph.transition().duration(1).each('end', function () {
+      // alert("In callback");
+      // line.remove();
+     d3.selectAll("path").remove();
+     // d3.selectAll(".path").remove();
+      // graph.selectAll("line")
+      // .transition()
+      // .style('opacity', 0)
+      // .remove(); // remove parent here...
+      graph.selectAll("line").data(data).enter()  
+     .append("svg:path")
+     .attr("stroke","red")
+     //.stroke("red")
+     .attr("d", line(data));
+    });
+
+    t.select(".x.axis").call(xAxis);
+
+     // graph.selectAll("line").data([]).exit()
+     // .append("svg:path")
+     // .attr("d", line(data));
+
+     //graph.selectAll("line").data([]).exit().transition().remove();
+
+    
+
+     //line.exit().remove();
+
+
+});
+}
+/*******************************   CHART PLOTTING FOR TWITTER SENTIMENT ************************/
+/******************************* For sending the search keyword-BEGIN **************************/
+
+  $('#search').click(function() { 
+
+        $.ajax({
+            url: '/bigdata/v1/analytics/sentiment?keyword='+ $('#searchbox').val(),
+            type: 'POST',
+           // data: {'keyword':$('#searchbox').val()}, // An object with the key 'submit' and value 'true;
+            success: function (result) {
+              alert("Your bookmark has been saved");
+            }
+        });  
+
+  });
+
+
+/******************************* For sending the search keyword - END **************************/
+
+
+
+</script>
+</body>
 </html>

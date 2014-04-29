@@ -1,6 +1,7 @@
 
         package edu.sjsu.cmpe.bigdata.api.resources;
-import com.yammer.metrics.annotation.Timed;
+
+        import com.yammer.metrics.annotation.Timed;
 import edu.sjsu.cmpe.bigdata.dao.MongoDBDAO;
 import edu.sjsu.cmpe.bigdata.domain.Sentiment;
 import edu.sjsu.cmpe.bigdata.dto.SentimentAnalysisDto;
@@ -8,6 +9,13 @@ import edu.sjsu.cmpe.bigdata.dto.Tweets;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+<<<<<<< HEAD
+=======
+
+import twitter4j.Status;
+import twitter4j.User;
+
+>>>>>>> a0456bab41c36ff64954c66af80481ea298a06b0
 import java.io.IOException;
 import java.net.UnknownHostException;
 
@@ -20,10 +28,17 @@ import java.net.UnknownHostException;
 @Consumes(MediaType.APPLICATION_JSON)
 public class AnalyticsResource {
 
+<<<<<<< HEAD
+    /**
+     * API to get result of sentiment analysis
+     */
+    @GET
+=======
 	/**
 	 * API to get result of sentiment analysis
 	 */
 	@GET
+>>>>>>> a0456bab41c36ff64954c66af80481ea298a06b0
     @Path("/sentiment")
     @Timed(name = "view-sentiment")
     public Sentiment viewSentiment() throws UnknownHostException {
@@ -40,28 +55,45 @@ public class AnalyticsResource {
         //Cookie cookie =  request.getCookies().get("senti");
         //if(mongoClient.findData(new BasicDBObject("password",cookie)).count()>0){
 
-		SentimentAnalysisDto sentimentAnalysisDto = new SentimentAnalysisDto();
-		return sentimentAnalysisDto.getSentiment();
+        SentimentAnalysisDto sentimentAnalysisDto = new SentimentAnalysisDto();
+        return sentimentAnalysisDto.getSentiment();
         //}
         //else return "Not Authorized";
 
     }
 
+<<<<<<< HEAD
+    /**
+     * API to get result of sentiment analysis
+     * @throws InterruptedException
+     * @throws IOException
+     */
+    @POST
+=======
 	/**
 	 * API to get result of sentiment analysis
 	 * @throws InterruptedException 
 	 * @throws IOException 
 	 */
 	@POST
+>>>>>>> a0456bab41c36ff64954c66af80481ea298a06b0
     @Path("/sentiment")
     @Timed(name = "get-sentiment")
     public String getSentiment(@QueryParam("keyword") String  keyword) throws InterruptedException, IOException {
 
+<<<<<<< HEAD
+        Tweets twitterSearch = new Tweets();
+        twitterSearch.search(keyword);
+
+        //while(true)
+        //{
+=======
 		Tweets twitterSearch = new Tweets();
 		twitterSearch.search(keyword);
 
 		//while(true)
 		//{
+>>>>>>> a0456bab41c36ff64954c66af80481ea298a06b0
 		/*int score = 0;
 		//RNTN sentiment = new RNTN();
 		Tweets twitterSearch = new Tweets();
@@ -81,9 +113,17 @@ public class AnalyticsResource {
 		 System.out.println("Total Sentiment: " + Math.abs(score) + "% " + ((score > 0)? "POSITVE":"NEGATIVE"));
 		 Thread.sleep(5000);
 		return null;
+<<<<<<< HEAD
+		*/
+        //}
+
+        return null;
+
+=======
 		*/	
 		//}
 
 		return null;
+>>>>>>> a0456bab41c36ff64954c66af80481ea298a06b0
     }
 }

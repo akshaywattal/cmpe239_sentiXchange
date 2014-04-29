@@ -13,7 +13,7 @@ public class SentimentAnalysisDto {
 	
 	public Sentiment getSentiment() throws UnknownHostException {
 
-
+           response = new Sentiment();
 		// Creating connection with MongoDB
 		MongoClient client = new MongoClient();
 		DB courseDB = client.getDB("bigdata");
@@ -30,12 +30,15 @@ public class SentimentAnalysisDto {
 		//DBCursor cursor = collection.find(query1).sort(query2).limit(1);
 		DBCursor cursor = collection.find(query1).limit(10);
         ArrayList<Integer> temp = new ArrayList<Integer>();
-        int[] tempArray = new int[cursor.size()];
+        double[] tempArray = new double[cursor.size()];
         int i=0;
         for(DBObject dp : cursor){
-
+           double pos = Double.parseDouble(dp.get("pos").toString());
+            //int pos = Integer.parseInt(dp.get("pos").toString());
+            double neg = Double.parseDouble(dp.get("neg").toString());
+            //int neg =  Integer.parseInt(dp.get("neg").toString());
             //temp.add(Integer.parseInt(dp.get("values").toString()));
-            tempArray[i++] = Integer.parseInt(dp.get("values").toString());
+            tempArray[i++] = pos - neg;
 
         }
 

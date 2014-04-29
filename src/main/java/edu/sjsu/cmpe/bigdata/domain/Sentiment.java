@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Sentiment {
 
     @JsonProperty
-    private int[] values;
+    private double[] values;
 
 
-    public int[] getValues() {
+    public double[] getValues() {
         return values;
     }
 
-    public void setValues(int[] values) {
+    public void setValues(double[] values) {
         this.values = values;
     }
 }

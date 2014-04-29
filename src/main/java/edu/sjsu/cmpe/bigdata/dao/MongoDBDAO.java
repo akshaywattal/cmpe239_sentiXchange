@@ -28,7 +28,7 @@ public class MongoDBDAO {
 	this.dbUserName = configuration.getDatabasename();
 	this.dbPassword = configuration.getDbHost();
 	this.bigdataUserCollection = configuration.getBigdatausercollection();
-    this.dataCollection = configuration.getDatacollection();
+    this.dataCollection = "data";
 	}
 	
 	public MongoClient getDBConnection(String dbHostName, int dbPortNumber) throws UnknownHostException {
@@ -108,7 +108,7 @@ public class MongoDBDAO {
 	}
 
     public String getDataCollection() {
-    return dataCollection;     }
+    return "data";     }
 
     public void setDataCollection(String dataCollection) {
         this.dataCollection = dataCollection;

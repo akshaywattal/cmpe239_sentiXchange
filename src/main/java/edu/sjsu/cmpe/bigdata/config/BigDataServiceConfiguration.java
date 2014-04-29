@@ -1,18 +1,10 @@
 package edu.sjsu.cmpe.bigdata.config;
 
-<<<<<<< HEAD
-=======
-import java.util.List;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.NotEmpty;
-
->>>>>>> a0456bab41c36ff64954c66af80481ea298a06b0
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yammer.dropwizard.config.Configuration;
 import org.hibernate.validator.constraints.NotEmpty;
+
+import java.util.List;
 
 public class BigDataServiceConfiguration extends Configuration {
 	@NotEmpty
@@ -61,16 +53,10 @@ public class BigDataServiceConfiguration extends Configuration {
     @JsonProperty
     private static int apolloPort;
 
-    @JsonProperty
-    private static String datacollection;
 
-    public static String getDatacollection() {
-        return datacollection;
-    }
+   // private static String datacollection;
 
-    public static void setDatacollection(String datacollection) {
-        BigDataServiceConfiguration.datacollection = datacollection;
-    }
+
 
     /*@Valid
     @NotNull
@@ -221,5 +207,13 @@ public class BigDataServiceConfiguration extends Configuration {
 	public void setBigdatausercollection(String bigdatausercollection) {
 		BigDataServiceConfiguration.bigdatausercollection = bigdatausercollection;
 	}
-    
+
+    /*public static String getDatacollection() {
+        return datacollection;
+    }
+
+    public static void setDatacollection(String datacollection) {
+        BigDataServiceConfiguration.datacollection = datacollection;
+    }
+         */
 }
