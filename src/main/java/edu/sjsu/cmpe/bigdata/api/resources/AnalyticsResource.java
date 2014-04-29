@@ -28,7 +28,6 @@ import java.util.ListIterator;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class AnalyticsResource {
-
 	/**
 	 * API to get result of sentiment analysis
 	 * @throws IOException 
