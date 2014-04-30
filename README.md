@@ -1,3 +1,8 @@
+GitHub Link
+======================
+https://github.com/akshaywattal/cmpe239_sentiXchange
+
+
 RESTful BigData Analytics Service
 ======================
 
@@ -17,4 +22,5 @@ Service endpoint: http://localhost:9080/bigdata/
 
 
 
-
+Screen Capture are in the Report
+======================
